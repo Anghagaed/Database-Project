@@ -6,6 +6,7 @@ public class DBConnection {
 	static Connection conn;
 	static String databaseName;
 	static Statement stmt;
+	static PreparedStatement pstmt;
 	static ResultSet rs;
 	
 	public DBConnection() {
@@ -13,12 +14,14 @@ public class DBConnection {
 		stmt = null;
 		databaseName = null;
 		rs = null;
+		pstmt = null;
 	}
 	public DBConnection(String input) {
 		databaseName = input;
 		conn = null;
 		stmt = null;
 		rs = null;
+		pstmt = null;
 	}
 	public void setdbName(String input) {
 		databaseName = input;
@@ -28,7 +31,6 @@ public class DBConnection {
 			try {
 				Class.forName("org.sqlite.JDBC");
 				conn = DriverManager.getConnection(databaseName);
-				stmt = conn.createStatement();
 			} catch(SQLException se){
 			      //Handle errors for JDBC
 			      se.printStackTrace();
@@ -36,8 +38,6 @@ public class DBConnection {
 			      //Handle errors for Class.forName
 			      e.printStackTrace();
 			   }
-		} else {
-			System.out.println("DatabaseName is empty.");
 		}
 	}
 	private void closeConnection() {
@@ -47,9 +47,7 @@ public class DBConnection {
 			} catch(SQLException se){
 				se.printStackTrace();
 			}
-		} else {
-			System.out.println("Connection is empty.");
-		}
+		} 
 	}
 	private void closeStatement() {
 		if (stmt != null) {
@@ -58,9 +56,14 @@ public class DBConnection {
 			} catch (SQLException se2) {
 				se2.printStackTrace();
 			}
-		} else {
-			System.out.println("Statement is empty.");
-		}
+		} 
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException se2) {
+				se2.printStackTrace();
+			}
+		} 
 	}
 	private void closeResultSet() {
 		if (rs != null) {
@@ -76,7 +79,38 @@ public class DBConnection {
 		closeStatement();
 		closeResultSet();
 	}
+	public void prepStmt(String sql) {
+		try {
+			pstmt = conn.prepareStatement(sql);
+		} catch(SQLException se) {
+			se.printStackTrace();
+		}
+	}
+	public ResultSet executeSQL() {
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch(SQLException se) {
+			} finally {
+				rs = null;
+			}
+		}
+		try {
+			rs = pstmt.executeQuery();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return rs;
+	}
 	public ResultSet executeSQL(String sql) {					
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch(SQLException se) {
+			} finally {
+				rs = null;
+			}
+		}
 		try {
 			rs = stmt.executeQuery(sql);
 		} catch(SQLException se) {

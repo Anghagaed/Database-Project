@@ -7,6 +7,14 @@ public class database {
 	
 	database() {
 		dat = new DBConnection(path);
+		dat.createConnection();
+	}
+	// query 1
+	public void query1() {
+		
+	}
+	public void close() {
+		dat.close();
 	}
 	
 }
