@@ -1,5 +1,6 @@
 package database_Connection;
 import java.sql.*;
+import java.util.Scanner;
 
 public class DBConnection {
 
@@ -86,12 +87,24 @@ public class DBConnection {
 			se.printStackTrace();
 		}
 	}
-	public void bindStmt(String type) {
+	public void bindStmt(String type, int order) {
+		Scanner sc = new Scanner(System.in);
 		if (type == "int") {
-			
+			try {
+				int input = sc.nextInt();
+				pstmt.setInt(order, input);
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
 		} else if (type == "string") {
-			
+			try {
+				String input = sc.nextLine();
+				pstmt.setString(order, input);
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
 		} 
+		sc.close();
 	}
 	public ResultSet executeSQL() {
 		if (rs != null) {
