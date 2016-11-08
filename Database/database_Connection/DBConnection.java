@@ -86,6 +86,13 @@ public class DBConnection {
 			se.printStackTrace();
 		}
 	}
+	public void bindStmt(String type) {
+		try {
+			pstmt.
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+	}
 	public ResultSet executeSQL() {
 		if (rs != null) {
 			try {
