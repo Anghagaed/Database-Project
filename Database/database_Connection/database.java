@@ -11,7 +11,7 @@ public class database {
 	}
 	// query 1
 	public void query1() {
-		sql = "SELECT ? FROM "
+		sql = "SELECT ? FROM ";
 	}
 	public void close() {
 		dat.close();

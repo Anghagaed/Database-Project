@@ -87,11 +87,11 @@ public class DBConnection {
 		}
 	}
 	public void bindStmt(String type) {
-		try {
-			pstmt.
-		} catch (SQLException se) {
-			se.printStackTrace();
-		}
+		if (type == "int") {
+			
+		} else if (type == "string") {
+			
+		} 
 	}
 	public ResultSet executeSQL() {
 		if (rs != null) {
