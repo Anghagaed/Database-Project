@@ -41,7 +41,7 @@ public class DBConnection {
 			   }
 		}
 	}
-	private void closeConnection() {
+	public void closeConnection() {
 		if (conn != null) {
 			try {
 				conn.close();
@@ -50,7 +50,7 @@ public class DBConnection {
 			}
 		} 
 	}
-	private void closeStatement() {
+	public void closeStatement() {
 		if (stmt != null) {
 			try {
 				stmt.close();
@@ -66,7 +66,7 @@ public class DBConnection {
 			}
 		} 
 	}
-	private void closeResultSet() {
+	public void closeResultSet() {
 		if (rs != null) {
 			try {
 				rs.close();

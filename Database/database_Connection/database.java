@@ -1,20 +1,13 @@
 package database_Connection;
 
 public class database {
-	DBConnection dat =  null;
-	static final String path = "";					// example: "jdbc:sqlite:test.db"
+	DBConnection dat;
+	static final String path = ".\\pwMan.db";					// example: "jdbc:sqlite:test.db"
 	String sql;
 	
 	database() {
 		dat = new DBConnection(path);
 		dat.createConnection();
+		sql = null;
 	}
-	// query 1
-	public void query1() {
-		
-	}
-	public void close() {
-		dat.close();
-	}
-	
 }
