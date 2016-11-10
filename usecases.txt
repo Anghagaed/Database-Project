@@ -1,0 +1,30 @@
+use case: 
+1. display username and password for given website
+	-
+
+2. display specific note entry
+	- 
+
+3. display wallet **
+
+4. update note entry
+
+5. update domain stuff
+
+6. update wallet entry
+
+7. insert note entry
+
+8. insert wallet entry
+
+9. insert domain stuff
+
+10. display account info
+
+11. update account info
+	a) update email
+	b) update addresses
+
+12. update account password (changes user cipher)
+
+13. 
