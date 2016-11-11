@@ -1,30 +1,65 @@
 use case: 
 1. display username and password for given website
-	-
+	SELECT p_domainusername, p_domainpassword
+	FROM passwordentry
+	WHERE p_domainname = inputdomainname; //? not sure how to do
 
 2. display specific note entry
-	- 
+	SELECT n_entry
+	FROM notes
+	WHERE specifications; //what specifics
 
 3. display wallet **
+	SELECT
+	FROM
+	WHERE
 
 4. update note entry
+	UPDATE notes
+	SET n_entry = inputNoteEntry
+	WHERE [condition]; //specify the entry?
 
 5. update domain stuff
+	UPDATE
+	SET
+	WHERE
 
 6. update wallet entry
+	UPDATE wallet
+	SET
+	WHERE
 
 7. insert note entry
+	INSERT INTO notes
+	VALUES ( // can choose which columns? or must insert all values)
 
 8. insert wallet entry
+	INSERT INTO wallet
+	VALUES (//all columns?)
 
 9. insert domain stuff
+	INSERT INTO
+	VALUES
 
 10. display account info
+	SELECT
+	FROM
+	WHERE
 
-11. update account info
+11. update account info **NEED ANOTHER TABLE FOR ACC INFO?
 	a) update email
+		UPDATE [accountinfo]
+		SET [email]
+		WHERE
+		
 	b) update addresses
+		UPDATE [accountinfo]
+		SET [address]
+		WHERE
 
 12. update account password (changes user cipher)
+	UPDATE [accountinfo]
+	SET [password]
+	WHERE
 
 13. 
