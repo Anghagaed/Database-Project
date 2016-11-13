@@ -2,25 +2,25 @@ use case:
 1. display username and password for given website
 	SELECT p_domainusername, p_domainpassword
 	FROM passwordentry
-	WHERE p_domainname = inputdomainname; //? not sure how to do
+	WHERE p_domainname=? AND p_userid=?;
 
 2. display specific note entry
 	SELECT n_entry
 	FROM notes
-	WHERE specifications; //what specifics
+	WHERE n_userid=? AND n_id=?; //what specifics
 
 3. display wallet **
-	SELECT
-	FROM
-	WHERE
+	SELECT w_bankname, w_cardtype, w_nameoncard, w_expirationdate, w_billingaddress, w_cardnum, w_securitycode
+	FROM wallet
+	WHERE w_id=? AND w_userid=?;
 
 4. update note entry
 	UPDATE notes
 	SET n_entry = inputNoteEntry
-	WHERE [condition]; //specify the entry?
+	WHERE n_id=( SELECT n_id FROM notes WHERE n_userid=? AND n_entry=?); //specify the entry?
 
 5. update domain stuff
-	UPDATE
+	UPDATE 
 	SET
 	WHERE
 

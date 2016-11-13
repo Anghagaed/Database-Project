@@ -23,6 +23,7 @@ w_expirationdate date not null,
 w_userid decimal(8,0) not null, 
 w_encryptid decimal(6,0) not null, 
 w_cipher varchar(100) not null, 
+w_id decimal(8,0) not null,
 primary key (w_cardnum, w_securitycode, w_cardtype));
 
 create table encryption(
