@@ -29,7 +29,16 @@ public class generateData {
 	}
 	
 	public void generateTnotes() {
-		sql = "INSERT INTO notes n_id;";
+		sql = "INSERT INTO notes (n_id, n_entry, n_userid, n_encryptid, n_cipher) VALUES (?, ?, ? , ?, ?);";
+		dat.prepStmt(sql);
+		for (int i = 1; i <= 500; ++i) {
+			dat.clearStatement();
+			dat.bindIntStmt();
+			dat.bindStringStmt(data, order);
+			dat.bindIntStmt();
+			dat.bindIntStmt();
+			dat.bindStringStmt(data, order);
+		}
 	}
 	
 	 public void close() {

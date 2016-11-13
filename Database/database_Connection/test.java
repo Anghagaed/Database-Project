@@ -10,7 +10,7 @@ public class test {
 			e.printStackTrace();
 		}
 		generateData dat = new generateData();
-		dat.generateTuser();
+		//dat.generateTuser();
 		dat.close();
 	}
 
