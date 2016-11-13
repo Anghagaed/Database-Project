@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class DBConnection {
 
 	static Connection conn;
-	static String databaseName;
+	static String path;
 	static Statement stmt;
 	static PreparedStatement pstmt;
 	static ResultSet rs;
@@ -13,25 +13,27 @@ public class DBConnection {
 	public DBConnection() {
 		conn = null;
 		stmt = null;
-		databaseName = null;
+		path = null;
 		rs = null;
 		pstmt = null;
 	}
 	public DBConnection(String input) {
-		databaseName = input;
+		path = input;
 		conn = null;
 		stmt = null;
 		rs = null;
 		pstmt = null;
 	}
-	public void setdbName(String input) {
-		databaseName = input;
+	public void setPath(String input) {
+		path = input;
 	}
+	/*
+	 * Create database connection to specific path IF path is initiliaze. 
+	 */
 	public void createConnection() {
-		if (databaseName != null) {
+		if (path != null) {
 			try {
-				Class.forName("org.sqlite.JDBC");
-				conn = DriverManager.getConnection(databaseName);
+				conn = DriverManager.getConnection(path);
 			} catch(SQLException se){
 			      //Handle errors for JDBC
 			      se.printStackTrace();
@@ -41,6 +43,9 @@ public class DBConnection {
 			   }
 		}
 	}
+	/*
+	 * Close database connection if connection was open
+	 */
 	public void closeConnection() {
 		if (conn != null) {
 			try {
@@ -50,6 +55,9 @@ public class DBConnection {
 			}
 		} 
 	}
+	/*
+	 * Close ALL statements if they were open
+	 */
 	public void closeStatement() {
 		if (stmt != null) {
 			try {
@@ -66,6 +74,9 @@ public class DBConnection {
 			}
 		} 
 	}
+	/*
+	 * Close ResultSet (Table) if they were open
+	 */
 	public void closeResultSet() {
 		if (rs != null) {
 			try {
@@ -75,11 +86,18 @@ public class DBConnection {
 			}
 		}
 	}
+	/*
+	 * General destructor for the class when done
+	 * Java does not allows for destructors like in C++
+	 */
 	public void close() {
 		closeConnection();
 		closeStatement();
 		closeResultSet();
 	}
+	/*
+	 * Prepare for Dynamic SQL
+	 */
 	public void prepStmt(String sql) {
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -87,6 +105,11 @@ public class DBConnection {
 			se.printStackTrace();
 		}
 	}
+	/*
+	 * Bind dynamic SQL parameter. 
+	 * This method takes data from the command line
+	 * First parameter is type of data, second parameter is the order of the parameter according to the dynamic SQL 
+	 */
 	public void bindStmt(String type, int order) {
 		Scanner sc = new Scanner(System.in);
 		if (type == "int") {
@@ -106,7 +129,36 @@ public class DBConnection {
 		} 
 		sc.close();
 	}
-	public ResultSet executeSQL() {
+	/*
+	 * Bind dynamic SQL parameter that has type int.
+	 * This generic method takes data from its arguments.
+	 * WIP: Need to figure out how to use Java Generic to do this instead of making individuals method
+	 */
+	public void bindIntStmt(int data, int order) {
+		try {
+			pstmt.setInt(order, data);
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+	}
+	/*
+	 * Bind dynamic SQL parameter that has type String.
+	 * This generic method takes data from its arguments.
+	 * WIP: Need to figure out how to use Java Generic to do this instead of making individuals method
+	 */
+	public void bindStringStmt(String data, int order) {
+		try {
+			pstmt.setString(order, data);
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+	}
+	/*
+	* Use this method for SELECT statements
+	* For Dynamic SQL
+	* Returns a ResultSet object
+	*/
+	public ResultSet executeSQL() {		
 		if (rs != null) {
 			try {
 				rs.close();
@@ -122,6 +174,25 @@ public class DBConnection {
 		}
 		return rs;
 	}
+	/*
+	* Use this method for INSERT, UPDATE, DELETE statements
+	* Returns the number of rows affected by the execution of the SQL statement.
+	* Return of a negative number means executions fails. 
+	*/
+	public int executeUpdateSQL() {
+		int columnsAffected = -1;
+		try {
+			columnsAffected = pstmt.executeUpdate();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return columnsAffected;
+	}
+	/*
+	* Use this method for SELECT statements
+	* For Static SQL
+	* Returns a ResultSet object
+	*/
 	public ResultSet executeSQL(String sql) {					
 		if (rs != null) {
 			try {
@@ -138,4 +209,17 @@ public class DBConnection {
 		}
 		return rs;													// Note that result can be null if something fail.
 	}
+	/*
+	 * Clear Prepare Statement parameters and readies it for another set of parameter data
+	 */
+	public void clearStatement() {
+		if (pstmt != null) {
+			try {
+				pstmt.clearParameters();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			} 	
+		}
+	}
+
 }

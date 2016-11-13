@@ -4,7 +4,7 @@ package database_Connection;
 public class generateData {
 	DBConnection dat;
 	String sql;
-	static final String path = ".\\pwMan.db";			// Need to figure out how path works for eclipse and java
+	static final String path = "jdbc:sqlite:Test/pwMan.db";			// Need to figure out how path works for eclipse and java
 	
 	public generateData() {
 		dat = new DBConnection(path);
@@ -13,16 +13,22 @@ public class generateData {
 	}
 	
 	public void generateTuser() {
-		sql = "INSERT INTO user VALUES (?, ?, ?)";
+		sql = "INSERT INTO user (u_userid, u_username, u_cipher) VALUES (?, ?, ?);";
 		dat.prepStmt(sql);
-		dat.bindStmt("1", 1);
-		dat.bindStmt("testUser1", 2);
-		dat.bindStmt("abcdefg", 3);
-		dat.executeSQL();
-		dat.bindStmt("2", 1);
-		dat.bindStmt("testUser2", 2);
-		dat.bindStmt("abcdefgi", 3);
-		dat.executeSQL();
+		/*
+		dat.bindIntStmt(1, 1);
+		dat.bindStringStmt("testUser1", 2);
+		dat.bindStringStmt("abcdefg", 3);
+		dat.executeUpdateSQL();
+		*/
+		for (int i = 1; i <= 500; ++i) {
+			dat.clearStatement();
+			dat.bindIntStmt(i, 1);
+			dat.bindStringStmt("testUser" + i, 2);
+			dat.bindStringStmt("abcdefg" + i, 3);
+			dat.executeUpdateSQL();
+		} 
+	
 	}
 	
 	
