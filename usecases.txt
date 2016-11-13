@@ -1,5 +1,5 @@
 use case: 
-1. display username and password for given website
+1. display username and password for given website:
 	SELECT p_domainusername, p_domainpassword
 	FROM passwordentry
 	WHERE p_domainname=? AND p_userid=?;
