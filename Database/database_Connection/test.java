@@ -11,6 +11,7 @@ public class test {
 		}
 		generateData dat = new generateData();
 		dat.generateTuser();
+		dat.close();
 	}
 
 }

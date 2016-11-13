@@ -1,6 +1,5 @@
 package database_Connection;
-
-import java.sql.ResultSet;
+//import java.sql.ResultSet;
 
 import database_Connection.DBConnection;
 
@@ -19,14 +18,7 @@ public class generateData {
 	
 	public void generateTuser() {
 		sql = "INSERT INTO user (u_userid, u_username, u_cipher) VALUES (?, ?, ?);";
-		//sql = "SELECT * FROM user WHERE u_id=?;";
 		dat.prepStmt(sql);
-		
-		dat.bindIntStmt(1, 1);
-		dat.bindStringStmt("testUser1", 2);
-		dat.bindStringStmt("abcdefg", 3);
-		dat.executeUpdateSQL();
-		
 		for (int i = 1; i <= 500; ++i) {
 			dat.clearStatement();
 			dat.bindIntStmt(i, 1);
@@ -34,20 +26,14 @@ public class generateData {
 			dat.bindStringStmt("abcdefg" + i, 3);
 			dat.executeUpdateSQL();
 		} 
-		
-		/*dat.bindIntStmt(15, 1);
-		ResultSet table = dat.executeSQL();
-		
-		while(table.next())
-		{
-			//retrieve by column name
-			ind id = table.getInt("u_id");
-			//display vals
-			System.out.println("USER_ID: " + id);
-		}
-		
-		table.close();*/
 	}
 	
+	public void generateTnotes() {
+		sql = "INSERT INTO notes n_id;";
+	}
+	
+	 public void close() {
+		 dat.close();
+	 }
 	
 }
