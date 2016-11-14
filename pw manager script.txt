@@ -1,7 +1,7 @@
 create table user(
 u_userid decimal(8,0) not null, 
 u_username varchar(30) not null, 
-u_cipher varchar(100) not null,
+u_cipher varchar(100),
 primary key (u_userid));
 
 create table notes(
@@ -9,7 +9,7 @@ n_id decimal(8,0) not null,
 n_entry varchar(150) not null, 
 n_userid decimal(8,0) not null, 
 n_encryptid decimal(6,0), 
-n_cipher varchar(100) not null,
+n_cipher varchar(100),
 primary key (n_id, n_userid));
 
 create table wallet(
@@ -22,7 +22,7 @@ w_securitycode varchar(5) not null,
 w_expirationdate date not null, 
 w_userid decimal(8,0) not null, 
 w_encryptid decimal(6,0), 
-w_cipher varchar(100) not null, 
+w_cipher varchar(100), 
 w_id decimal(8,0) not null,
 primary key (w_id, w_userid));
 
@@ -38,6 +38,7 @@ p_userid decimal(8,0) not null,
 p_domainusername varchar(25) not null, 
 p_domainpassword varchar(40) not null, 
 p_encryptid decimal(6,0),
+P_cipher varchar(100),
 primary key (p_id, p_userid));
 
 create table encryptedpasswordentry(
@@ -56,15 +57,11 @@ ew_id decimal(6,0) not null,
 primary key (ew_id));
 
 create table accountinfo(
+ai_id decimal(8,0) not null,
+ai_userid decimal(8,0) not null,
 ai_customername varchar(40) not null,
 ai_email varchar(72) not null,
 ai_state varchar(15) not null,
 ai_city varchar(26) not null,
 ai_street varchar(45) not null,
-primary key (ai_email));
-
-create table test2 (
-t_id decimal(8,0) not null,
-t_testing varchar(50),
-t_value decimal(8,0) not null,
-primary key(t_id));
+primary key (ai_id, ai_userid));

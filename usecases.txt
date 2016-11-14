@@ -7,7 +7,7 @@ use case:
 2. display specific note entry
 	SELECT n_entry
 	FROM notes
-	WHERE n_userid=? AND n_id=?; //what specifics
+	WHERE n_userid=? AND n_id=?;
 
 3. display wallet **
 	SELECT w_bankname, w_cardtype, w_nameoncard, w_expirationdate, w_billingaddress, w_cardnum, w_securitycode
@@ -22,7 +22,7 @@ use case:
 4. update note entry
 	UPDATE notes
 	SET n_entry = inputNoteEntry
-	WHERE n_id=( SELECT n_id FROM notes WHERE n_userid=? AND n_entry=?); //specify the entry?
+	WHERE n_id = (SELECT n_id FROM notes WHERE n_userid=? AND n_entry=?);
 
 5. update domain stuff
 	//update domainname
@@ -69,39 +69,44 @@ use case:
 
 	//update securitycode
 	UPDATE wallet
+	SET w_securitycode = ?
+	WHERE w_id=? AND w_userid=?;
+
+	//update expirationdate
+	UPDATE wallet
+	SET w_expirationdate =?
+	WHERE w_id=? AND w_userid=?;
 
 
 7. insert note entry
-	INSERT INTO notes
-	VALUES ( // can choose which columns? or must insert all values)
+	INSERT INTO notes (n_id, n_entry, n_userid)
+	VALUES (?, ?, ?);
 
 8. insert wallet entry
-	INSERT INTO wallet
-	VALUES (//all columns?)
+	INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_id)
+	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 9. insert domain stuff
-	INSERT INTO
-	VALUES
+	INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street)
+	VALUES (?, ?, ?, ?, ?, ?, ?);
 
 10. display account info
-	SELECT
-	FROM
-	WHERE
+	SELECT ai_customername, ai_email, ai_state, ai_city, ai_street
+	FROM accountinfo
+	WHERE ai_id=? AND ai_userid=?;
 
-11. update account info **NEED ANOTHER TABLE FOR ACC INFO?
+11. update account info
 	a) update email
-		UPDATE [accountinfo]
-		SET [email]
-		WHERE
+		UPDATE accountinfo
+		SET ai_email=?
+		WHERE ai_id=? AND ai_userid=?;
 		
 	b) update addresses
-		UPDATE [accountinfo]
-		SET [address]
-		WHERE
+		UPDATE accountinfo
+		SET ai_state=?, ai_city=?, ai_street=?
+		WHERE ai_id=? AND ai_usreid=?;
 
 12. update account password (changes user cipher)
-	UPDATE [accountinfo]
-	SET [password]
+	UPDATE accountinfo
+	SET 
 	WHERE
-
-13. 
