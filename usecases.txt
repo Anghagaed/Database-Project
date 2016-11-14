@@ -21,7 +21,7 @@ use case:
 
 4. update note entry
 	UPDATE notes
-	SET n_entry = inputNoteEntry
+	SET n_entry = ?
 	WHERE n_id = (SELECT n_id FROM notes WHERE n_userid=? AND n_entry=?);
 
 5. update domain stuff
@@ -54,7 +54,7 @@ use case:
 
 	//update cardnum
 	UPDATE wallet
-	SET w_cardnum
+	SET w_cardnum = ?
 	WHERE w_id=? AND w_userid=?;
 
 	//update nameoncard
@@ -74,7 +74,7 @@ use case:
 
 	//update expirationdate
 	UPDATE wallet
-	SET w_expirationdate =?
+	SET w_expirationdate = ?
 	WHERE w_id=? AND w_userid=?;
 
 
@@ -87,25 +87,25 @@ use case:
 	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 9. insert accountinfo stuff // Need change, this is account info. Need one for passwordentry
-	INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street)
-	VALUES (?, ?, ?, ?, ?, ?, ?);
+	INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus)
+	VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 
 	
 10. display account info
-	SELECT ai_customername, ai_email, ai_state, ai_city, ai_street
+	SELECT ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus
 	FROM accountinfo
 	WHERE ai_id=? AND ai_userid=?;
 
 11. update account info
 	a) update email
 		UPDATE accountinfo
-		SET ai_email=?
+		SET ai_email= ?
 		WHERE ai_id=? AND ai_userid=?;
 		
 	b) update addresses
 		UPDATE accountinfo
 		SET ai_state=?, ai_city=?, ai_street=?
-		WHERE ai_id=? AND ai_usreid=?;
+		WHERE ai_id=? AND ai_userid=?;
 
 12. update account password (changes user cipher)
 	UPDATE user
