@@ -8,9 +8,9 @@ create table notes(
 n_id decimal(8,0) not null,
 n_entry varchar(150) not null, 
 n_userid decimal(8,0) not null, 
-n_encryptid decimal(6,0) not null, 
+n_encryptid decimal(6,0), 
 n_cipher varchar(100) not null,
-primary key (n_id));
+primary key (n_id, n_userid));
 
 create table wallet(
 w_bankname varchar(72) not null, 
@@ -21,10 +21,10 @@ w_billingaddress varchar(120) not null,
 w_securitycode varchar(5) not null, 
 w_expirationdate date not null, 
 w_userid decimal(8,0) not null, 
-w_encryptid decimal(6,0) not null, 
+w_encryptid decimal(6,0), 
 w_cipher varchar(100) not null, 
 w_id decimal(8,0) not null,
-primary key (w_cardnum, w_securitycode, w_cardtype, w_id));
+primary key (w_id, w_userid));
 
 create table encryption(
 e_cipher varchar(100) not null, 
@@ -32,12 +32,13 @@ e_id decimal(8,0) not null,
 primary key (e_id));
 
 create table passwordentry(
+p_id decimal(8,0) not null,
 p_domainname varchar(72) not null, 
 p_userid decimal(8,0) not null, 
 p_domainusername varchar(25) not null, 
 p_domainpassword varchar(40) not null, 
-p_encryptid decimal(6,0) not null,
-primary key (p_domainname, p_userid, p_domainusername);
+p_encryptid decimal(6,0),
+primary key (p_id, p_userid));
 
 create table encryptedpasswordentry(
 epe_encryptid decimal(6,0) not null, 

@@ -14,20 +14,61 @@ use case:
 	FROM wallet
 	WHERE w_id=? AND w_userid=?;
 
+	//display card stuff
+	SELECT w_cardtype, w_nameoncard, w_expirationdate, w_billingaddress, w_cardnum, w_securitycode
+	FROM wallet
+	WHERE w_id=? AND w_userid=?;
+
 4. update note entry
 	UPDATE notes
 	SET n_entry = inputNoteEntry
 	WHERE n_id=( SELECT n_id FROM notes WHERE n_userid=? AND n_entry=?); //specify the entry?
 
 5. update domain stuff
-	UPDATE 
-	SET
-	WHERE
+	//update domainname
+	UPDATE passwordentry
+	SET p_domainname = ?
+	WHERE p_id =? AND p_userid = ?;
+
+	//update domainusername
+	UPDATE passwordentry
+	SET p_domainusername = ?
+	WHERE p_id=? AND p_userid=?;
+
+	//update domainpassword
+	UPDATE passwordentry
+	SET p_domainpassword = ?
+	WHERE p_id=? AND p_userid=?;
+
 
 6. update wallet entry
+	//update bankname
 	UPDATE wallet
-	SET
-	WHERE
+	SET w_bankname = ?
+	WHERE w_id=? AND w_userid=?;
+	
+	//update cardtype
+	UPDATE wallet
+	SET w_cardtype = ?
+	WHERE w_id = ? AND w_userid=?;
+
+	//update cardnum
+	UPDATE wallet
+	SET w_cardnum
+	WHERE w_id=? AND w_userid=?;
+
+	//update nameoncard
+	UPDATE wallet
+	SET w_nameoncard = ?
+	WHERE w_id=? AND w_userid=?;
+
+	//update billingaddress
+	UPDATE wallet
+	SET w_billingaddress = ?
+	WHERE w_id=? AND w_userid=?;
+
+	//update
+
 
 7. insert note entry
 	INSERT INTO notes
