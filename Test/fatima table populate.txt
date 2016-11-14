@@ -66,32 +66,32 @@ VALUES (1, “hello”, 10, 10, “1234567890”);
 
 
 //WALLET
-INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_encryptid, w_cipher, w_id)
 VALUES (“chase”, 1, 1234567890123456, “sally”, “125 address st, merced, CA 12345”, “123”, “03-03-2018”, 1, 1, “1234567890”, 1);
 
-INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_encryptid, w_cipher, w_id)
 VALUES (“bank of america”, 2, 1200567890123456, “wylan”, “127 a st, merced, CA 12345”, “456”, “04-03-2019”, 2, 1, “1234567890”, 1);
 
-INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_encryptid, w_cipher, w_id)
 VALUES (“chase”, 3, 1234567000123456, “jesper”, “1st st, merced, CA 12345”, “789”, “07-23-2017”, 3, 1, “1234567890”, 1);
 
-INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_encryptid, w_cipher, w_id)
 VALUES (“wells fargo”, 4, 1233567890123456, “kaz”, “A st, merced, CA 12345”, “012”, “01-14-2018”, 4, 1, “1234567890”, 1);
 
-INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_encryptid, w_cipher, w_id)
 VALUES (“bank of the west”, 1, 1234567855123456, “rig”, “3rd st, merced, CA 12345”, “246”, “07-06-2018”, 5, 1, “1234567890”, 1);
 
-INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_encryptid, w_cipher, w_id)
 VALUES (“east west bank”, 2, 1234568890123456, “loaf”, “16th st, merced, CA 12345”, “135”, “03-03-2019”, 6, 1, “1234567890”, 1);
 
-INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_encryptid, w_cipher, w_id)
 VALUES (“chase”, 3, 1234567892223456, “ron”, “11th st, merced, CA 12345”, “468”, “12-03-2020”, 7, 1, “1234567890”, 1);
 
-INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_encryptid, w_cipher, w_id)
 VALUES (“wells fargo”, 4, 1234511890123456, “draco”, “O st, merced, CA 12345”, “357”, “06-28-2018”, 8, 1, “1234567890”, 1);
 
-INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_encryptid, w_cipher, w_id)
 VALUES (“bank of america”, 1, 1234567890144456, “john”, “street st, merced, CA 12345”, “680”, “07-03-2018”, 9, 1, “1234567890”, 1);
 
-INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_encryptid, w_cipher, w_id)
 VALUES (“bank of america”, 1, 1234569990123456, “smith”, “4th st, merced, CA 12345”, “579”, “10-03-2018”, 10, 1, “1234567890”, 1);
