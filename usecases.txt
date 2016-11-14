@@ -87,26 +87,26 @@ use case:
 	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 9. insert domain stuff
-	INSERT INTO accountinfo (ai_customername, ai_email, ai_state, ai_city, ai_street)
-	VALUES (?, ?, ?, ?, ?);
+	INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street)
+	VALUES (?, ?, ?, ?, ?, ?, ?);
 
 10. display account info
-	SELECT 
-	FROM
-	WHERE
+	SELECT ai_customername, ai_email, ai_state, ai_city, ai_street
+	FROM accountinfo
+	WHERE ai_id=? AND ai_userid=?;
 
-11. update account info **NEED ANOTHER TABLE FOR ACC INFO?
+11. update account info
 	a) update email
-		UPDATE [accountinfo]
-		SET [email]
-		WHERE
+		UPDATE accountinfo
+		SET ai_email=?
+		WHERE ai_id=? AND ai_userid=?;
 		
 	b) update addresses
-		UPDATE [accountinfo]
-		SET [address]
-		WHERE
+		UPDATE accountinfo
+		SET ai_state=?, ai_city=?, ai_street=?
+		WHERE ai_id=? AND ai_usreid=?;
 
 12. update account password (changes user cipher)
-	UPDATE [accountinfo]
-	SET [password]
+	UPDATE accountinfo
+	SET 
 	WHERE

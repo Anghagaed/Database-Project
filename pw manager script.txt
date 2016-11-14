@@ -57,9 +57,11 @@ ew_id decimal(6,0) not null,
 primary key (ew_id));
 
 create table accountinfo(
+ai_id decimal(8,0) not null,
+ai_userid decimal(8,0) not null,
 ai_customername varchar(40) not null,
 ai_email varchar(72) not null,
 ai_state varchar(15) not null,
 ai_city varchar(26) not null,
 ai_street varchar(45) not null,
-primary key (ai_customername, ai_email));c
+primary key (ai_id, ai_userid));
