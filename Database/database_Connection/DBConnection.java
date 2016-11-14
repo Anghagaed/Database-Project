@@ -153,6 +153,19 @@ public class DBConnection {
 			se.printStackTrace();
 		}
 	}
+	
+	/*
+	 * Bind dynamic SQL parameter that has type Date.
+	 * This generic method takes data from its arguments.
+	 * WIP: Need to figure out how to use Java Generic to do this instead of making individuals method
+	 */
+	public void bindDateStmt(java.sql.Date data, int order) {
+		try {
+			pstmt.setDate(order, data);
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+	}
 	/*
 	* Use this method for SELECT statements
 	* For Dynamic SQL

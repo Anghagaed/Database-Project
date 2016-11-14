@@ -1,6 +1,9 @@
 package database_Connection;
 //import java.sql.ResultSet;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 import database_Connection.DBConnection;
 
 //import java.sql.*;
@@ -60,17 +63,37 @@ public class generateData {
 		dat.prepStmt(sql);
 		for (int i = 1; i <= 250; ++i) {
 			String bname = "abcd" + i;
-			String ctype;
-			switch (i % 2) {
-				case 0 :
-					ctype = "VISA";
-					break;
-				case 1 :
-					ctype = "CREDIT";
-					break;
-			}
+			int ctype = i % 4;
+			String cnum;
+			if (i < 10)
+				cnum = "123412341234000" + i;
+			else if (i < 100)
+				cnum = "12341234123400" + i;
+			else 
+				cnum = "1234123412340" + i;
+			String name = "abcdefghijk" + i;
+			String address = "abcd" + (i%3) + " efgh" + (i%4) + " ijkl" + (i%5);
+			String secCode = ((i*i*i)%10) + "5" + ((i*i*i*i*i)%10);
+			SimpleDateFormat sdf1 = new SimpleDateFormat("dd-mm-yyyy");
+			java.sql.Date expDate = new Date(sdf1.parse("00-11-2018").getTime());
+			int userid = i;
+			int w_id = i;
 			
+			dat.clearStatement();
+			dat.bindStringStmt(bname, 1);
+			dat.bindIntStmt(ctype, 2);
+			dat.bindStringStmt( cnum, 3);
+			dat.bindStringStmt(name, 4);
+			dat.bindStringStmt(address, 5);
+			dat.bindStringStmt(secCode, 6);
+			dat.bindDateStmt(expDate, 7);
+			dat.bindIntStmt(userid, 8);
+			dat.bindIntStmt(w_id, 9);
 		}
+		dat.clearStatement();
+		
+		sql = "INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, " 
+				+ "w_expirationdate, w_userid, w_id, w_encryptedid, ) VALUES (?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?);";
 	}
 	
 	 public void close() {
