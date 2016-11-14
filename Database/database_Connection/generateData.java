@@ -32,13 +32,18 @@ public class generateData {
 		sql = "INSERT INTO notes (n_id, n_entry, n_userid, n_encryptid, n_cipher) VALUES (?, ?, ? , ?, ?);";
 		dat.prepStmt(sql);
 		for (int i = 1; i <= 500; ++i) {
-			dat.clearStatement();
-			dat.bindIntStmt();
-			dat.bindStringStmt(data, order);
-			dat.bindIntStmt();
-			dat.bindIntStmt();
-			dat.bindStringStmt(data, order);
-		}
+			for (int j = 1; j <= 2; ++j) {	
+				String entry = "This is test note entry #" + (i + j);
+				String cipher = "abcdefg" + i;
+				dat.clearStatement();
+				dat.bindIntStmt(i,1);
+				dat.bindStringStmt(entry, 2);
+				dat.bindIntStmt(i, 3);
+				if ( (i + j ) % 2 == 1 )
+					dat.bindIntStmt( , 4);
+				dat.bindStringStmt(cipher, 5);
+			}
+			}
 	}
 	
 	 public void close() {
