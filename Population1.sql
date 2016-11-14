@@ -1,33 +1,33 @@
 /* AccountInfo */
 INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus, ai_subexpdate)
-VALUES (1, 1, "A", "test1@gmail.com", "CA", "A Ave", 1, "01-11-2018");
+VALUES (1, 1, "A", "test1@gmail.com", "CA", "Merced", "A Ave", 1, "01-11-2018");
 
 INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus, ai_subexpdate)
-VALUES (2, 2, "B", "test2@gmail.com", "CA", "B Ave", 1, "02-11-2018");
+VALUES (2, 2, "B", "test2@gmail.com", "CA", "Merced", "B Ave", 1, "02-11-2018");
 
 INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus, ai_subexpdate)
-VALUES (3, 3, "C", "test3@gmail.com", "CA", "C Ave", 1, "03-11-2018");
+VALUES (3, 3, "C", "test3@gmail.com", "CA", "Merced", "C Ave", 1, "03-11-2018");
 
 INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus, ai_subexpdate)
-VALUES (4, 4, "D", "test4@gmail.com", "CA", "D Ave", 1, "04-11-2018");
+VALUES (4, 4, "D", "test4@gmail.com", "CA", "Merced", "D Ave", 1, "04-11-2018");
 
 INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus, ai_subexpdate)
-VALUES (5, 5, "E", "test5@gmail.com", "CA", "E Ave", 1, "05-11-2018");
+VALUES (5, 5, "E", "test5@gmail.com", "CA", "Merced", "E Ave", 1, "05-11-2018");
 
 INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus, ai_subexpdate)
-VALUES (6, 6, "F", "test6@gmail.com", "CA", "F Ave", 1, "06-11-2018");
+VALUES (6, 6, "F", "test6@gmail.com", "CA", "Merced", "F Ave", 1, "06-11-2018");
 
 INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus, ai_subexpdate)
-VALUES (7, 7, "G", "test7@gmail.com", "CA", "G Ave", 1, "07-11-2018");
+VALUES (7, 7, "G", "test7@gmail.com", "CA", "Merced", "G Ave", 1, "07-11-2018");
 
 INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus, ai_subexpdate)
-VALUES (8, 8, "H", "test8@gmail.com", "CA", "H Ave", 1, "08-11-2018");
+VALUES (8, 8, "H", "test8@gmail.com", "CA", "Merced", "H Ave", 1, "08-11-2018");
 
 INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus, ai_subexpdate)
-VALUES (9, 9, "I", "test9@gmail.com", "CA", "I Ave", 1, "09-11-2018");
+VALUES (9, 9, "I", "test9@gmail.com", "CA", "Merced", "I Ave", 1, "09-11-2018");
 
 INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus, ai_subexpdate)
-VALUES (10, 10, "J", "test10@gmail.com", "CA", "J Ave", 1, "10-11-2018");
+VALUES (10, 10, "J", "test10@gmail.com", "CA", "Merced", "J Ave", 1, "10-11-2018");
 
 /* EncryptedWallet */
 INSERT INTO encryptedwallet (ew_encryptid, ew_id) 
