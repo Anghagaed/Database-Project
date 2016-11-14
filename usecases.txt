@@ -86,10 +86,11 @@ use case:
 	INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_id)
 	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 
-9. insert domain stuff // Need change, this is account info. Need one for passwordentry
+9. insert accountinfo stuff // Need change, this is account info. Need one for passwordentry
 	INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street)
 	VALUES (?, ?, ?, ?, ?, ?, ?);
 
+	
 10. display account info
 	SELECT ai_customername, ai_email, ai_state, ai_city, ai_street
 	FROM accountinfo
@@ -110,6 +111,27 @@ use case:
 	UPDATE user
 	SET u_cipher=?
 	WHERE u_userid=?;
-13. create user 
 
+13. insert into user table
+	INSERT INTO user (u_userid, u_username)
+	VALUES (?, ?);
 
+14. insert domain stuff
+	INSERT INTO passwordentry (p_id, p_domainname, p_userid, p_domainusername, p_domainpassword)
+	VALUES (?, ?, ?, ?, ?);
+
+15. delete password entry
+	DELETE FROM passwordentry
+	WHERE p_id=? AND p_userid=?;
+
+16. delete wallet entry
+	DELETE FROM wallet
+	WHERE w_id=? AND w_userid=?;
+
+17. delete note entry
+	DELETE FROM notes
+	WHERE n_id=? AND n_userid=?;
+
+18. delete account
+	DELETE FROM accountinfo
+	WHERE ai_id=? AND ai_userid=?;
