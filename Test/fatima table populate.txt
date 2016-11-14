@@ -1,0 +1,97 @@
+//USER
+
+INSERT INTO user (u_userid, u_username, u_cipher)
+VALUES (1, "sam", "1234567890");
+
+INSERT INTO user (u_userid, u_username, u_cipher)
+VALUES (2, “mat”, “1234567890”);
+
+INSERT INTO user (u_userid, u_username, u_cipher)
+VALUES (3, “felicia”, “1234567890”);
+
+INSERT INTO user (u_userid, u_username, u_cipher)
+VALUES (4, “chad”, “1234567890”);
+
+INSERT INTO user (u_userid, u_username, u_cipher)
+VALUES (5, “harry”, “1234567890”);
+
+INSERT INTO user (u_userid, u_username, u_cipher)
+VALUES (6, “hermione”, “1234567890”);
+
+INSERT INTO user (u_userid, u_username, u_cipher)
+VALUES (7, “kaz”, “1234567890”);
+
+INSERT INTO user (u_userid, u_username, u_cipher)
+VALUES (8, “inej”, “1234567890”);
+
+INSERT INTO user (u_userid, u_username, u_cipher)
+VALUES (9, “jesper”, “1234567890”);
+
+INSERT INTO user (u_userid, u_username, u_cipher)
+VALUES (10, “wylan”, “1234567890”);
+
+
+
+//NOTES
+
+INSERT INTO notes (n_id, n_entry, n_userid, n_encryptid, n_cipher)
+VALUES (1, “hello”, 1, 1, “1234567890”);
+
+INSERT INTO notes (n_id, n_entry, n_userid, n_encryptid, n_cipher)
+VALUES (1, “hey”, 2, 2, “1234567890”); 
+
+INSERT INTO notes (n_id, n_entry, n_userid, n_encryptid, n_cipher)
+VALUES (1, “what up”, 3, 3, “1234567890”);
+
+INSERT INTO notes (n_id, n_entry, n_userid, n_encryptid, n_cipher)
+VALUES (1, “note”, 4, 4, “1234567890”);
+
+INSERT INTO notes (n_id, n_entry, n_userid, n_encryptid, n_cipher)
+VALUES (1, “entry”, 5, 5, “1234567890”);
+
+INSERT INTO notes (n_id, n_entry, n_userid, n_encryptid, n_cipher)
+VALUES (1, “word”, 6, 6, “1234567890”);
+
+INSERT INTO notes (n_id, n_entry, n_userid, n_encryptid, n_cipher)
+VALUES (1, “hi”, 7, 7, “1234567890”);
+
+INSERT INTO notes (n_id, n_entry, n_userid, n_encryptid, n_cipher)
+VALUES (1, “noteEntry”, 8, 8. “1234567890”);
+
+INSERT INTO notes (n_id, n_entry, n_userid, n_encryptid, n_cipher)
+VALUES (1, “hey”, 9, 9, “1234567890”);
+
+INSERT INTO notes (n_id, n_entry, n_userid, n_encryptid, n_cipher)
+VALUES (1, “hello”, 10, 10, “1234567890”);
+
+
+//WALLET
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+VALUES (“chase”, 1, 1234567890123456, “sally”, “125 address st, merced, CA 12345”, “123”, “03-03-2018”, 1, 1, “1234567890”, 1);
+
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+VALUES (“bank of america”, 2, 1200567890123456, “wylan”, “127 a st, merced, CA 12345”, “456”, “04-03-2019”, 2, 1, “1234567890”, 1);
+
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+VALUES (“chase”, 3, 1234567000123456, “jesper”, “1st st, merced, CA 12345”, “789”, “07-23-2017”, 3, 1, “1234567890”, 1);
+
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+VALUES (“wells fargo”, 4, 1233567890123456, “kaz”, “A st, merced, CA 12345”, “012”, “01-14-2018”, 4, 1, “1234567890”, 1);
+
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+VALUES (“bank of the west”, 1, 1234567855123456, “rig”, “3rd st, merced, CA 12345”, “246”, “07-06-2018”, 5, 1, “1234567890”, 1);
+
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+VALUES (“east west bank”, 2, 1234568890123456, “loaf”, “16th st, merced, CA 12345”, “135”, “03-03-2019”, 6, 1, “1234567890”, 1);
+
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+VALUES (“chase”, 3, 1234567892223456, “ron”, “11th st, merced, CA 12345”, “468”, “12-03-2020”, 7, 1, “1234567890”, 1);
+
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+VALUES (“wells fargo”, 4, 1234511890123456, “draco”, “O st, merced, CA 12345”, “357”, “06-28-2018”, 8, 1, “1234567890”, 1);
+
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+VALUES (“bank of america”, 1, 1234567890144456, “john”, “street st, merced, CA 12345”, “680”, “07-03-2018”, 9, 1, “1234567890”, 1);
+
+INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_cipher, w_id)
+VALUES (“bank of america”, 1, 1234569990123456, “smith”, “4th st, merced, CA 12345”, “579”, “10-03-2018”, 10, 1, “1234567890”, 1);
