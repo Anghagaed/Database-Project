@@ -86,7 +86,7 @@ use case:
 	INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_id)
 	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 
-9. insert domain stuff
+9. insert domain stuff // Need change, this is account info. Need one for passwordentry
 	INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street)
 	VALUES (?, ?, ?, ?, ?, ?, ?);
 
@@ -107,6 +107,9 @@ use case:
 		WHERE ai_id=? AND ai_usreid=?;
 
 12. update account password (changes user cipher)
-	UPDATE accountinfo
-	SET 
-	WHERE
+	UPDATE user
+	SET u_cipher=?
+	WHERE u_userid=?;
+13. create user 
+
+

@@ -64,4 +64,6 @@ ai_email varchar(72) not null,
 ai_state varchar(15) not null,
 ai_city varchar(26) not null,
 ai_street varchar(45) not null,
+ai_substatus bit not null,
+ai_subexpdate date,
 primary key (ai_id, ai_userid));
