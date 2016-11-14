@@ -1,137 +1,137 @@
-use case: 
-1. display username and password for given website:
+/* use case: */ 
+/* 1. display username and password for given website: */
 	SELECT p_domainusername, p_domainpassword
 	FROM passwordentry
 	WHERE p_domainname=? AND p_userid=?;
 
-2. display specific note entry
+/* 2. display specific note entry */
 	SELECT n_entry
 	FROM notes
 	WHERE n_userid=? AND n_id=?;
 
-3. display wallet **
+/* 3. display wallet ** */
 	SELECT w_bankname, w_cardtype, w_nameoncard, w_expirationdate, w_billingaddress, w_cardnum, w_securitycode
 	FROM wallet
 	WHERE w_id=? AND w_userid=?;
 
-	//display card stuff
+	/* //display card stuff */
 	SELECT w_cardtype, w_nameoncard, w_expirationdate, w_billingaddress, w_cardnum, w_securitycode
 	FROM wallet
 	WHERE w_id=? AND w_userid=?;
 
-4. update note entry
+/* 4. update note entry */
 	UPDATE notes
 	SET n_entry = ?
 	WHERE n_id = (SELECT n_id FROM notes WHERE n_userid=? AND n_entry=?);
 
-5. update domain stuff
-	//update domainname
+/* 5. update domain stuff */
+	/* //update domainname*/
 	UPDATE passwordentry
 	SET p_domainname = ?
 	WHERE p_id =? AND p_userid = ?;
 
-	//update domainusername
+	/* //update domainusername */
 	UPDATE passwordentry
 	SET p_domainusername = ?
 	WHERE p_id=? AND p_userid=?;
 
-	//update domainpassword
+	/* //update domainpassword */
 	UPDATE passwordentry
 	SET p_domainpassword = ?
 	WHERE p_id=? AND p_userid=?;
 
 
-6. update wallet entry
-	//update bankname
+/* 6. update wallet entry */
+	/* //update bankname */
 	UPDATE wallet
 	SET w_bankname = ?
 	WHERE w_id=? AND w_userid=?;
 	
-	//update cardtype
+	/* //update cardtype */
 	UPDATE wallet
 	SET w_cardtype = ?
 	WHERE w_id = ? AND w_userid=?;
 
-	//update cardnum
+	/* //update cardnum */
 	UPDATE wallet
 	SET w_cardnum = ?
 	WHERE w_id=? AND w_userid=?;
 
-	//update nameoncard
+	/* //update nameoncard */
 	UPDATE wallet
 	SET w_nameoncard = ?
 	WHERE w_id=? AND w_userid=?;
 
-	//update billingaddress
+	/* //update billingaddress */
 	UPDATE wallet
 	SET w_billingaddress = ?
 	WHERE w_id=? AND w_userid=?;
 
-	//update securitycode
+	/* //update securitycode */
 	UPDATE wallet
 	SET w_securitycode = ?
 	WHERE w_id=? AND w_userid=?;
 
-	//update expirationdate
+	/* //update expirationdate */
 	UPDATE wallet
 	SET w_expirationdate = ?
 	WHERE w_id=? AND w_userid=?;
 
 
-7. insert note entry
+/* 7. insert note entry */
 	INSERT INTO notes (n_id, n_entry, n_userid)
 	VALUES (?, ?, ?);
 
-8. insert wallet entry
+/* 8. insert wallet entry */
 	INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_id)
 	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 
-9. insert accountinfo stuff // Need change, this is account info. Need one for passwordentry
+/* 9. insert accountinfo stuff // Need change, this is account info. Need one for passwordentry */
 	INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus)
 	VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 
 	
-10. display account info
+/* 10. display account info */
 	SELECT ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus
 	FROM accountinfo
 	WHERE ai_id=? AND ai_userid=?;
 
-11. update account info
-	a) update email
+/* 11. update account info */
+	/* a) update email */
 		UPDATE accountinfo
 		SET ai_email= ?
 		WHERE ai_id=? AND ai_userid=?;
 		
-	b) update addresses
+	/* b) update addresses */
 		UPDATE accountinfo
 		SET ai_state=?, ai_city=?, ai_street=?
 		WHERE ai_id=? AND ai_userid=?;
 
-12. update account password (changes user cipher)
+/* 12. update account password (changes user cipher) */
 	UPDATE user
 	SET u_cipher=?
 	WHERE u_userid=?;
 
-13. insert into user table
+/* 13. insert into user table */
 	INSERT INTO user (u_userid, u_username)
 	VALUES (?, ?);
 
-14. insert domain stuff
+/* 14. insert domain stuff */
 	INSERT INTO passwordentry (p_id, p_domainname, p_userid, p_domainusername, p_domainpassword)
 	VALUES (?, ?, ?, ?, ?);
 
-15. delete password entry
+/* 15. delete password entry */
 	DELETE FROM passwordentry
 	WHERE p_id=? AND p_userid=?;
 
-16. delete wallet entry
+/* 16. delete wallet entry */
 	DELETE FROM wallet
 	WHERE w_id=? AND w_userid=?;
 
-17. delete note entry
+/* 17. delete note entry */
 	DELETE FROM notes
 	WHERE n_id=? AND n_userid=?;
 
-18. delete account
+/* 18. delete account */
 	DELETE FROM accountinfo
 	WHERE ai_id=? AND ai_userid=?;
