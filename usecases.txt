@@ -67,7 +67,8 @@ use case:
 	SET w_billingaddress = ?
 	WHERE w_id=? AND w_userid=?;
 
-	//update
+	//update securitycode
+	UPDATE wallet
 
 
 7. insert note entry
