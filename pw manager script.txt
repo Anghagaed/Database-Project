@@ -38,7 +38,7 @@ p_userid decimal(8,0) not null,
 p_domainusername varchar(25) not null, 
 p_domainpassword varchar(40) not null, 
 p_encryptid decimal(6,0),
-P_cipher varchar(100),
+p_cipher varchar(100),
 primary key (p_id, p_userid));
 
 create table encryptedpasswordentry(
