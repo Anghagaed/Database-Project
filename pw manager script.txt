@@ -61,6 +61,10 @@ ai_email varchar(72) not null,
 ai_state varchar(15) not null,
 ai_city varchar(26) not null,
 ai_street varchar(45) not null,
-primary key (ai_customername, ai_email));
+primary key (ai_email));
 
-
+create table test2 (
+t_id decimal(8,0) not null,
+t_testing varchar(50),
+t_value decimal(8,0) not null,
+primary key(t_id));

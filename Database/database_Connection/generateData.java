@@ -30,20 +30,47 @@ public class generateData {
 	
 	public void generateTnotes() {
 		sql = "INSERT INTO notes (n_id, n_entry, n_userid, n_encryptid, n_cipher) VALUES (?, ?, ? , ?, ?);";
+		//String sql2 = "INSERT INTO notes (n_id, n_entry, n_userid) VALUES (?, ?, ?);";
 		dat.prepStmt(sql);
-		for (int i = 1; i <= 500; ++i) {
-			for (int j = 1; j <= 2; ++j) {	
-				String entry = "This is test note entry #" + (i + j);
-				String cipher = "abcdefg" + i;
-				dat.clearStatement();
-				dat.bindIntStmt(i,1);
-				dat.bindStringStmt(entry, 2);
-				dat.bindIntStmt(i, 3);
-				if ( (i + j ) % 2 == 1 )
-					dat.bindIntStmt( , 4);
-				dat.bindStringStmt(cipher, 5);
+		for (int i = 1; i <= 250; ++i) {
+			String entry = "This is test note entry #" + (i);
+			String cipher = "abcdefg" + i;
+			dat.clearStatement();
+			dat.bindIntStmt(i,1);
+			dat.bindStringStmt(entry, 2);
+			dat.bindIntStmt(i, 3);
+			dat.bindIntStmt(i, 4);
+			dat.bindStringStmt(cipher, 5);
+		}
+		dat.closeStatement();
+		sql = "INSERT INTO notes (n_id, n_entry, n_userid) VALUES (?, ?, ?);";
+		dat.prepStmt(sql);
+		for (int i = 1; i <= 250; ++i) {
+			String entry = "This is test note entry #" + (i + 250);
+			dat.clearStatement();
+			dat.bindIntStmt(i + 250,1);
+			dat.bindStringStmt(entry, 2);
+			dat.bindIntStmt(i + 250, 3);
+		}
+	}
+	
+	public void generateTwallet() {
+		sql = "INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, " 
+				+ "w_expirationdate, w_userid, w_id) VALUES (?, ?, ?, ?, ?, ?, ? ,? ,?);";
+		dat.prepStmt(sql);
+		for (int i = 1; i <= 250; ++i) {
+			String bname = "abcd" + i;
+			String ctype;
+			switch (i % 2) {
+				case 0 :
+					ctype = "VISA";
+					break;
+				case 1 :
+					ctype = "CREDIT";
+					break;
 			}
-			}
+			
+		}
 	}
 	
 	 public void close() {
