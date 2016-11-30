@@ -12,7 +12,7 @@
 /* 3. display wallet ** */
 	SELECT w_bankname, w_cardtype, w_nameoncard, w_expirationdate, w_billingaddress, w_cardnum, w_securitycode
 	FROM wallet
-	WHERE w_id=? AND w_userid=?;
+	WHERE w_id=1 AND w_userid=1;
 
 	/* //display card stuff */
 	SELECT w_cardtype, w_nameoncard, w_expirationdate, w_billingaddress, w_cardnum, w_securitycode
@@ -21,8 +21,14 @@
 
 /* 4. update note entry */
 	UPDATE notes
+<<<<<<< Updated upstream
 	SET n_entry = ?
+	WHERE n_id = (SELECT n_id FROM notes WHERE n_userid=? AND n_entry=?)
+	ORDER BY n_id ASC;
+=======
+	SET n_entry = 
 	WHERE n_id = (SELECT n_id FROM notes WHERE n_userid=? AND n_entry=?);
+>>>>>>> Stashed changes
 
 /* 5. update domain stuff */
 	/* //update domainname*/
@@ -44,7 +50,7 @@
 /* 6. update wallet entry */
 	/* //update bankname */
 	UPDATE wallet
-	SET w_bankname = ?
+	SET w_bankname = “
 	WHERE w_id=? AND w_userid=?;
 	
 	/* //update cardtype */
@@ -79,14 +85,29 @@
 
 
 /* 7. insert note entry */
+	/* n_id = (value of aggregate result) + 1 */
+	SELECT count(*) 
+	FROM notes
+	WHERE n_userid=?;
+	/* n_userid for both query is the same */
 	INSERT INTO notes (n_id, n_entry, n_userid)
 	VALUES (?, ?, ?);
 
 /* 8. insert wallet entry */
+	/* w_id = (value of aggregate result) + 1 */
+	SELECT count(*)
+	FROM wallet
+	WHERE w_userid=?;
+	/* w_userid for both query is the same */
 	INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_id)
 	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 /* 9. insert accountinfo stuff // Need change, this is account info. Need one for passwordentry */
+	/* ai_id = (value of aggregate result) + 1 */
+	SELECT count(*) 
+	FROM accountinfo
+	WHERE ai_userid=?;
+	/* ai_userid for both query is the same */
 	INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus)
 	VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 
@@ -113,6 +134,7 @@
 	WHERE u_userid=?;
 
 /* 13. insert into user table */
+
 	INSERT INTO user (u_userid, u_username)
 	VALUES (?, ?);
 
