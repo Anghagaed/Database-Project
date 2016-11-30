@@ -135,3 +135,4 @@
 /* 18. delete account */
 	DELETE FROM accountinfo
 	WHERE ai_id=? AND ai_userid=?;
+/* test */
