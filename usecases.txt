@@ -1,4 +1,4 @@
-/* use case: */ 
+﻿/* use case: */ 
 /* 1. display username and password for given website: */
 	SELECT p_domainusername, p_domainpassword
 	FROM passwordentry
@@ -12,7 +12,7 @@
 /* 3. display wallet ** */
 	SELECT w_bankname, w_cardtype, w_nameoncard, w_expirationdate, w_billingaddress, w_cardnum, w_securitycode
 	FROM wallet
-	WHERE w_id=1 AND w_userid=1;
+	WHERE w_id=? AND w_userid=?;
 
 	/* //display card stuff */
 	SELECT w_cardtype, w_nameoncard, w_expirationdate, w_billingaddress, w_cardnum, w_securitycode
