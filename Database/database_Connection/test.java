@@ -1,7 +1,7 @@
 package database_Connection;
 
 public class test {
-
+	/*
 	public static void main(String[] args) {
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -13,5 +13,6 @@ public class test {
 		//dat.generateTuser();
 		dat.close();
 	}
+	*/
 
 }

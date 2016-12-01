@@ -12,7 +12,7 @@ public class generateData {
 	DBConnection dat;
 	String sql;
 	static final String path = "jdbc:sqlite:Test/pwMan.db";			// Need to figure out how path works for eclipse and java
-	
+	/*
 	public generateData() {
 		dat = new DBConnection(path);
 		sql = null;
@@ -75,7 +75,7 @@ public class generateData {
 			String address = "abcd" + (i%3) + " efgh" + (i%4) + " ijkl" + (i%5);
 			String secCode = ((i*i*i)%10) + "5" + ((i*i*i*i*i)%10);
 			SimpleDateFormat sdf1 = new SimpleDateFormat("dd-mm-yyyy");
-			java.sql.Date expDate = new Date(sdf1.parse("00-11-2018").getTime());
+			//java.sql.Date expDate = new Date(sdf1.parse("00-11-2018").getTime());
 			int userid = i;
 			int w_id = i;
 			
@@ -99,5 +99,6 @@ public class generateData {
 	 public void close() {
 		 dat.close();
 	 }
+	 */
 	
 }
