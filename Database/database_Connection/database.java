@@ -19,11 +19,11 @@ public class database {
 		sql = null;
 	}
 	
-	public void displayUserNPass(String domainname, int userID) {
+	public void displayUserNPass(String domainname, int userID) throws SQLException {
 		sql = "SELECT p_domainusername, p_domainpassword FROM passwordentry WHERE p_domainname=? AND p_userid=?;";
 		dat.prepStmt(sql);
-		dat.bindStringStmt(domainname, 1);
-		dat.bindIntStmt(userID, 2);
+		dat.bindStringStmt(domainname, 1); //1 is example - need real domainname
+		dat.bindIntStmt(userID, 2); //userid start with what #? look up & replace '2'
 		ResultSet rs = dat.executeSQL();
 		
 		String username = rs.getString("p_domainusername");
@@ -33,4 +33,6 @@ public class database {
 		System.out.println("Passowrd :" + password);
 		dat.clearStatement();
 	}
+	
+	public void 
 }

@@ -12,7 +12,7 @@
 /* 3. display wallet ** */
 	SELECT w_bankname, w_cardtype, w_nameoncard, w_expirationdate, w_billingaddress, w_cardnum, w_securitycode
 	FROM wallet
-	WHERE w_id=1 AND w_userid=1;
+	WHERE w_id=? AND w_userid=?;
 
 	/* //display card stuff */
 	SELECT w_cardtype, w_nameoncard, w_expirationdate, w_billingaddress, w_cardnum, w_securitycode
@@ -21,14 +21,9 @@
 
 /* 4. update note entry */
 	UPDATE notes
-<<<<<<< Updated upstream
 	SET n_entry = ?
 	WHERE n_id = (SELECT n_id FROM notes WHERE n_userid=? AND n_entry=?)
 	ORDER BY n_id ASC;
-=======
-	SET n_entry = 
-	WHERE n_id = (SELECT n_id FROM notes WHERE n_userid=? AND n_entry=?);
->>>>>>> Stashed changes
 
 /* 5. update domain stuff */
 	/* //update domainname*/
