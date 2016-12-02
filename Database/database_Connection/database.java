@@ -34,5 +34,12 @@ public class database {
 		dat.clearStatement();
 	}
 	
-	public void 
+	public int UpdateDomainPass(int passID, int userID) throws SQLException{
+		sql = "UPDATE passwordentry SET p_domainpassword = ? WHERE p_id=? AND p_userid=?;";
+		dat.preptStmt(sql);
+		dat.bindIntStmt(passID, 1);
+		dat.bindIntStmt(userID, 2);
+		int rs = dat.executeUpdateSQL();
+		return rs;
+	}
 }

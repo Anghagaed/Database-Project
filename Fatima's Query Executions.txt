@@ -94,4 +94,95 @@
 		int rs = dat.executeUpdateSQL();
 		return rs;
 	}
-	//ened at 5 pt2
+	
+public int UpdateDomainPass(int passID, int userID) throws SQLException{
+		sql = "UPDATE passwordentry SET p_domainpassword = ? WHERE p_id=? AND p_userid=?;";
+		dat.preptStmt(sql);
+		dat.bindIntStmt(passID, 1);
+		dat.bindIntStmt(userID, 2);
+		int rs = dat.executeUpdateSQL();
+		return rs;
+	}
+
+
+public int UpdateWalletEntry(String bankName, int walletID, int userID) throws SQLException{
+		sql = "UPDATE wallet SET w_bankname = ? WHERE w_id=? AND w_userid=?;";
+		dat.preptStmt(sql);
+		dat.bindStringStmt(bankName, 1);
+		dat.bindIntStmt(walletID, 2);
+		dat.bindIntStmt(userID, 3);
+		int rs = dat.executeUpdateSQL();
+		return rs;
+	}
+
+
+public int UpdateWalletEntry(String cardType, int walletID, int userID) throws SQLException{
+		sql = "UPDATE wallet SET w_cardtype = ? WHERE w_id = ? AND w_userid=?;";
+		dat.preptStmt(sql);
+		dat.bindStringStmt(cardType, 1);
+		dat.bindIntStmt(walletID, 2);
+		dat.bindIntStmt(userID, 3);
+		int rs = dat.executeUpdateSQL();
+		return rs;
+	}
+
+
+public int UpdateWalletEntry(String cardNum, int walletID, int userID) throws SQLException{
+		sql = "UPDATE wallet SET w_cardnum = ? WHERE w_id=? AND w_userid=?;";
+		dat.preptStmt(sql);
+		dat.bindStringStmt(cardNum, 1);
+		dat.bindIntStmt(walletID, 2);
+		dat.bindIntStmt(userID, 3);
+		int rs = dat.executeUpdateSQL();
+		return rs;
+	}
+
+
+
+public int UpdateWalletEntry(String nameOnCard, int walletID, int userID) throws SQLException{
+		sql = "UPDATE wallet SET w_nameoncard = ? WHERE w_id=? AND w_userid=?;";
+		dat.preptStmt(sql);
+		dat.bindStringStmt(nameOnCard, 1);
+		dat.bindIntStmt(walletID, 2);
+		dat.bindIntStmt(userID, 3);
+		int rs = dat.executeUpdateSQL();
+		return rs;
+	}
+
+
+
+public int UpdateWalletEntry(String billAddress, int walletID, int userID) throws SQLException{
+		sql = "UPDATE wallet SET w_billingaddress = ? WHERE w_id=? AND w_userid=?;";
+		dat.preptStmt(sql);
+		dat.bindStringStmt(billAddress, 1);
+		dat.bindIntStmt(walletID, 2);
+		dat.bindIntStmt(userID, 3);
+		int rs = dat.executeUpdateSQL();
+		return rs;
+	}
+
+
+
+public int UpdateWalletEntry(int secCode, int walletID, int userID) throws SQLException{
+		sql = "UPDATE wallet SET w_securitycode = ? WHERE w_id=? AND w_userid=?;";
+		dat.preptStmt(sql);
+		dat.bindIntStmt(secCode, 1);
+		dat.bindIntStmt(walletID, 2);
+		dat.bindIntStmt(userID, 3);
+		int rs = dat.executeUpdateSQL();
+		return rs;
+	}
+
+
+
+public int UpdateWalletEntry(Date expDate, int walletID, int userID) throws SQLException{
+		sql = "UPDATE wallet SET w_expirationdate = ? WHERE w_id=? AND w_userid=?;";
+		dat.preptStmt(sql);
+		dat.bindDateStmt(expDate, 1);
+		dat.bindIntStmt(walletID, 2);
+		dat.bindIntStmt(userID, 3);
+		int rs = dat.executeUpdateSQL();
+		return rs;
+	}
+
+
