@@ -105,7 +105,7 @@ public int UpdateDomainPass(int passID, int userID) throws SQLException{
 	}
 
 
-public int UpdateWalletEntry(String bankName, int walletID, int userID) throws SQLException{
+public int UpdateBankName(String bankName, int walletID, int userID) throws SQLException{
 		sql = "UPDATE wallet SET w_bankname = ? WHERE w_id=? AND w_userid=?;";
 		dat.preptStmt(sql);
 		dat.bindStringStmt(bankName, 1);
@@ -116,7 +116,7 @@ public int UpdateWalletEntry(String bankName, int walletID, int userID) throws S
 	}
 
 
-public int UpdateWalletEntry(String cardType, int walletID, int userID) throws SQLException{
+public int UpdateCardType(String cardType, int walletID, int userID) throws SQLException{
 		sql = "UPDATE wallet SET w_cardtype = ? WHERE w_id = ? AND w_userid=?;";
 		dat.preptStmt(sql);
 		dat.bindStringStmt(cardType, 1);
@@ -127,7 +127,7 @@ public int UpdateWalletEntry(String cardType, int walletID, int userID) throws S
 	}
 
 
-public int UpdateWalletEntry(String cardNum, int walletID, int userID) throws SQLException{
+public int UpdateCardNum(String cardNum, int walletID, int userID) throws SQLException{
 		sql = "UPDATE wallet SET w_cardnum = ? WHERE w_id=? AND w_userid=?;";
 		dat.preptStmt(sql);
 		dat.bindStringStmt(cardNum, 1);
@@ -139,7 +139,7 @@ public int UpdateWalletEntry(String cardNum, int walletID, int userID) throws SQ
 
 
 
-public int UpdateWalletEntry(String nameOnCard, int walletID, int userID) throws SQLException{
+public int UpdateNameOnCard(String nameOnCard, int walletID, int userID) throws SQLException{
 		sql = "UPDATE wallet SET w_nameoncard = ? WHERE w_id=? AND w_userid=?;";
 		dat.preptStmt(sql);
 		dat.bindStringStmt(nameOnCard, 1);
@@ -151,7 +151,7 @@ public int UpdateWalletEntry(String nameOnCard, int walletID, int userID) throws
 
 
 
-public int UpdateWalletEntry(String billAddress, int walletID, int userID) throws SQLException{
+public int UpdateBillAddress(String billAddress, int walletID, int userID) throws SQLException{
 		sql = "UPDATE wallet SET w_billingaddress = ? WHERE w_id=? AND w_userid=?;";
 		dat.preptStmt(sql);
 		dat.bindStringStmt(billAddress, 1);
@@ -163,7 +163,7 @@ public int UpdateWalletEntry(String billAddress, int walletID, int userID) throw
 
 
 
-public int UpdateWalletEntry(int secCode, int walletID, int userID) throws SQLException{
+public int UpdateSecCode(int secCode, int walletID, int userID) throws SQLException{
 		sql = "UPDATE wallet SET w_securitycode = ? WHERE w_id=? AND w_userid=?;";
 		dat.preptStmt(sql);
 		dat.bindIntStmt(secCode, 1);
@@ -175,7 +175,7 @@ public int UpdateWalletEntry(int secCode, int walletID, int userID) throws SQLEx
 
 
 
-public int UpdateWalletEntry(Date expDate, int walletID, int userID) throws SQLException{
+public int UpdateExpDate(Date expDate, int walletID, int userID) throws SQLException{
 		sql = "UPDATE wallet SET w_expirationdate = ? WHERE w_id=? AND w_userid=?;";
 		dat.preptStmt(sql);
 		dat.bindDateStmt(expDate, 1);
@@ -185,4 +185,58 @@ public int UpdateWalletEntry(Date expDate, int walletID, int userID) throws SQLE
 		return rs;
 	}
 
+//NOT SURE IF THIS ONE IS CORRECT //num 7
+public int insertNoteEntry(int userID, String noteEntry) throws SQLException {
+		sql = "SELECT count(*) AS count  FROM notes WHERE n_userid=?;";
+		dat.prepStmt(sql);
+		dat.bindIntStmt(userID, 1);
+		ResultSet rs = dat.executeSQL();
+		
+		while(rs.next()){
+			int noteID = rs.getInt(1); //takes in 1st column of resultset as int
+			noteID = noteID + 1;
+			dat.clearStatement();
+			
+			sql = "INSERT INTO notes (n_id, n_entry, n_userid) VALUES (?, ?, ?);";
+			dat.prepStmt(sql);
+			dat.bindIntStmt(noteID, 1);
+			dat.bindStringStmt(noteEntry, 2);
+			dat.bindIntStmt(userID, 3);
+			int rs = executeUpdateSQL();
+			return rs;
+		}
 
+	}
+
+
+//NOT SURE IF THIS IS CORRECT EITHER // num 8
+public int insertWalletEntry(int userID, String bankName, String cardType, int cardNum, String nameOnCard, string billAddress, int secCode, Date expDate) throws SQLException {
+		sql = "SELECT count(*) FROM wallet WHERE w_userid=?;";
+		dat.prepStmt(sql);
+		dat.bindIntStmt(userID, 1);
+		ResultSet rs = dat.executeSQL();
+		
+		while(rs.next()){
+			dat.clearStatement();
+			int walletID = rs.getInt(1); //gets first column from resultset as int
+			walletID = walletID + 1;
+			
+			sql = "INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			
+			dat.prepStmt(sql);
+			
+			dat.bindStringStmt(bankName, 1);
+			dat.bindStringStmt(cardType, 2);
+			dat.bindIntStmt(cardNum, 3);
+			dat.bindStringStmt(nameOnCard, 4);
+			dat.bindStringStmt(billAddress, 5);
+			dat.bindIntStmt(secCode, 6);
+			dat.bindDateStmt(expDate, 7);
+			dat.bindIntStmt(userID, 8);
+			dat.bindIntStmt(walletID, 9);
+			
+			int rs = executeUpdateSQL();
+			return rs;
+		}
+
+	}
