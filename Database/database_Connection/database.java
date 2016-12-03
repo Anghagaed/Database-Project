@@ -18,6 +18,24 @@ public class database {
 		dat.createConnection();
 		sql = null;
 	}
+	public int getUserID(String username) throws SQLException {
+		sql = "SELECT u_userid FROM user WHERE u_username=?;";
+		dat.prepStmt(sql);
+		dat.bindStringStmt(username, 1);
+		ResultSet rs = dat.executeSQL();
+		int result = rs.getInt("u_userid");
+		rs.close();
+		return result;
+	}
+	public String getUserPassword(String username) throws SQLException {
+		sql = "SELECT u_cipher FROM user WHERE u_username=?;";
+		dat.prepStmt(sql);
+		dat.bindStringStmt(username, 1);
+		ResultSet rs = dat.executeSQL();
+		String result = rs.getString("u_cipher");
+		rs.close();
+		return result;
+	}
 	
 	public void displayUserNPass(String domainname, int userID) throws SQLException {
 		sql = "SELECT p_domainusername, p_domainpassword FROM passwordentry WHERE p_domainname=? AND p_userid=?;";
@@ -125,7 +143,7 @@ public class database {
 		sql = "INSERT INTO user (u_userid, u_username) VALUES (?, ?);";
 		dat.prepStmt(sql);
 		dat.bindIntStmt(userID, 1);
-		dat.bindStringStmt(username, 1);
+		dat.bindStringStmt(username, 2);
 		dat.executeUpdateSQL();
 		dat.clearStatement();
 		return userID;

@@ -15,11 +15,11 @@ public class commandLine {
 	public commandLine() {
 		
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		startScreen();
 	}
 	
-	public static void startScreen() {
+	public static void startScreen() throws SQLException {
 		// Start Screen
 		int result = 0;
 		do {
@@ -71,11 +71,10 @@ public class commandLine {
 		System.out.print("Password: ");
 		password = sc.nextLine();
 		int ID = dat.insertUser(username);
-		String cipher = aes.encrypt(ID + username + ID, password);
+		String cipher = aes.encrypt(password, ID + username + ID);
 		dat.updateUserPassword(cipher, ID);
-		
 	}
-	public static void existingMember() {
+	public static void existingMember() throws SQLException {
 		String username, password;
 		System.out.println("Please input in your username and password.");
 		System.out.print(  "Username: ");
@@ -84,6 +83,49 @@ public class commandLine {
 		password = sc.nextLine();
 		
 		// Authentication
+		int userID = dat.getUserID(username);
+		String key = userID + username + userID;
+		String cipher = dat.getUserPassword(username);
+		String x = aes.decrypt(cipher, key);
+		
+		if (x.equals(password) == false) {
+			System.out.println("Authenication fail");
+		}
+		else {
+			mainScreen(userID);
+		}
+	}
+	public static void mainScreen(int userID) {
+		int input = 0;
+		do{
+			System.out.println("*******************************************");
+			System.out.println("* Please choose the following options:    *");
+			System.out.println("* 1. View Domain Entries                *");
+			System.out.println("* 2. View Wallet Entries                  *");
+			System.out.println("* 3. View Note Entries                    *");
+			System.out.println("* 4. View Account Info                    *");
+			System.out.println("* 5. Exit                                 *");
+			System.out.println("*******************************************");
+			input = sc.nextInt();
+			if(input == 1 || input == 2 || input == 3 || input == 4)
+				if(input == 1){ //display passwords
+					startDomain(userID);
+				}
+				if(input == 2){ //display wallet entries
+					startWallet(userID);
+				} 
+				if(input == 3){ //display note entries
+					startNote(userID);
+				}
+				if(input == 4){//display account info
+					startAccount(userID);
+				}
+				else if (input != 5) {
+					System.out.println("Please input in a valid number.");
+			}
+		} while (input != 5);
+		
+		
 	}
 	
 

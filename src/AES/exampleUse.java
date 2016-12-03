@@ -5,7 +5,7 @@ public class exampleUse {
 
 	public static void main(String[] args) 
     {
-        final String secretKey = "hellotherehowu";
+        final String secretKey = "123456789";
          
         //String originalString = "insertStringHere!";
         Scanner scanner  = new Scanner (System.in);

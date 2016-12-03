@@ -74,4 +74,4 @@ ai_city varchar(26) not null,
 ai_street varchar(45) not null,
 ai_substatus bit not null,
 ai_subexpdate date,
-primary key (ai_id);
+primary key (ai_id));
