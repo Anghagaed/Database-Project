@@ -19,7 +19,7 @@ public class AES {
         MessageDigest sha = null;
         try {
             key = myKey.getBytes("UTF-8");
-            sha = MessageDigest.getInstance("SHA-1");
+            sha = MessageDigest.getInstance("SHA-256");
             key = sha.digest(key);
             key = Arrays.copyOf(key, 16); 
             secretKey = new SecretKeySpec(key, "AES");
@@ -66,7 +66,7 @@ public class AES {
     /*
     public static void main(String[] args) 
     {
-        final String secretKey = "hellotherehowu";
+        final String secretKey = "hellotherehowu1234567890987654";
          
         //String originalString = "insertStringHere!";
         Scanner scanner  = new Scanner (System.in);

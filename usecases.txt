@@ -1,15 +1,18 @@
-﻿/* use case: */ 
+/* use case: */ 
 /* 1. display username and password for given website: */
+/* CHECK ENCRYPTIONSTATUS */
 	SELECT p_domainusername, p_domainpassword
 	FROM passwordentry
 	WHERE p_domainname=? AND p_userid=?;
 
 /* 2. display specific note entry */
+/* CHECK ENCRYPTIONSTATUS */
 	SELECT n_entry
 	FROM notes
 	WHERE n_userid=? AND n_id=?;
 
 /* 3. display wallet ** */
+/* CHECK ENCRYPTIONSTATUS */
 	SELECT w_bankname, w_cardtype, w_nameoncard, w_expirationdate, w_billingaddress, w_cardnum, w_securitycode
 	FROM wallet
 	WHERE w_id=? AND w_userid=?;
@@ -37,6 +40,7 @@
 	WHERE p_id=? AND p_userid=?;
 
 	/* //update domainpassword */
+	/* THINK ABOUT ENCRYPTED LOGIC */
 	UPDATE passwordentry
 	SET p_domainpassword = ?
 	WHERE p_id=? AND p_userid=?;
@@ -134,8 +138,9 @@
 	VALUES (?, ?);
 
 /* 14. insert domain stuff */
-	INSERT INTO passwordentry (p_id, p_domainname, p_userid, p_domainusername, p_domainpassword)
-	VALUES (?, ?, ?, ?, ?);
+/* NEED TO BE CHANGED IN JAVA CODE - ADDED ENCRYPTSTATUS */
+	INSERT INTO passwordentry (p_id, p_domainname, p_userid, p_domainusername, p_domainpassword,p_encryptstatus)
+	VALUES (?, ?, ?, ?, ?, ?);
 
 /* 15. delete password entry */
 	DELETE FROM passwordentry
