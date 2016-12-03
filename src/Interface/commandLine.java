@@ -1,11 +1,18 @@
 package Interface;
 import database_Connection.*;
+
+import java.sql.SQLException;
 import java.util.*;
 // Command Line User Interface
 public class commandLine {
 
-	static database Dat = new database();
+	static database dat = new database();
 	static Scanner sc = new Scanner(System.in);
+	static int userID;
+	
+	public commandLine() {
+		
+	}
 	public static void main(String[] args) {
 		startScreen();
 	}
@@ -34,7 +41,7 @@ public class commandLine {
 		} while (result != 3);
 	}
 	
-	public static void newMember() {
+	public static void newMember() throws SQLException {
 		int input = 0;
 		do {
 			System.out.println("*******************************************");
@@ -54,7 +61,16 @@ public class commandLine {
 		} while (input != 2);
 	}
 	
-	public static void createAccount() {
+	public static void createAccount() throws SQLException {
+		String username, password;
+		System.out.println("Please fill out the following information:");
+		System.out.print("Username: ");
+		username = sc.nextLine();
+		System.out.print("Password: ");
+		password = sc.nextLine();
+		int ID = dat.insertUser(username);
+		String 
+		dat.updateUserPassword()
 		
 	}
 	public static void existingMember() {
