@@ -101,8 +101,7 @@
 /* 9. insert accountinfo stuff // Need change, this is account info. Need one for passwordentry */
 	/* ai_id = (value of aggregate result) + 1 */
 	SELECT count(*) 
-	FROM accountinfo
-	WHERE ai_userid=?;
+	FROM accountinfo;
 	/* ai_userid for both query is the same */
 	INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus)
 	VALUES (?, ?, ?, ?, ?, ?, ?, ?);

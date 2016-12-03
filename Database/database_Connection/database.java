@@ -36,8 +36,27 @@ public class database {
 	}
 
 	// Need to be worked on.
-	public int insertAccInfo() {
-		return 0;
+	public int insertAccInfo(int userID, String cName, String email, String state, String city, String street, boolean subStatus) throws SQLException {
+		sql = "SELECT count(*) as count FROM accountinfo;";
+		dat.prepStmt(sql);
+		ResultSet rs = dat.executeSQL();
+		int ID = (rs.getInt("ct")) + 1;
+		rs.close();
+		dat.clearStatement();
+
+		sql = "INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+		dat.prepStmt(sql);
+		dat.bindIntStmt(ID, 1);
+		dat.bindIntStmt(userID, 2);
+		dat.bindStringStmt(cName, 3);
+		dat.bindStringStmt(email, 4);
+		dat.bindStringStmt(state, 5);
+		dat.bindStringStmt(city, 6);
+		dat.bindStringStmt(street, 7);
+		dat.bindBoolStmt(subStatus, 8);
+		int result = dat.executeUpdateSQL();
+		
+		return result;
 	}
 	
 	public int updateAccountStreet(String newStreet, int ID, int userID) {

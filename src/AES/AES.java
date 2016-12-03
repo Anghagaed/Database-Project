@@ -32,11 +32,11 @@ public class AES {
         }
     }
  
-    public static String encrypt(String strToEncrypt, String secret) 
+    public static String encrypt(String strToEncrypt, String key) 
     {
         try
         {
-            setKey(secret);
+            setKey(key);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
@@ -48,11 +48,11 @@ public class AES {
         return null;
     }
  
-    public static String decrypt(String strToDecrypt, String secret) 
+    public static String decrypt(String strToDecrypt, String key) 
     {
         try
         {
-            setKey(secret);
+            setKey(key);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
@@ -63,7 +63,7 @@ public class AES {
         }
         return null;
     }
-    
+    /*
     public static void main(String[] args) 
     {
         final String secretKey = "hellotherehowu";
@@ -79,4 +79,5 @@ public class AES {
         System.out.println(encryptedString);
         System.out.println(decryptedString);
     }
+    */
 }

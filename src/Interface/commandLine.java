@@ -1,5 +1,6 @@
 package Interface;
 import database_Connection.*;
+import AES.*;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -8,6 +9,7 @@ public class commandLine {
 
 	static database dat = new database();
 	static Scanner sc = new Scanner(System.in);
+	static AES aes = new AES();
 	static int userID;
 	
 	public commandLine() {
@@ -69,8 +71,8 @@ public class commandLine {
 		System.out.print("Password: ");
 		password = sc.nextLine();
 		int ID = dat.insertUser(username);
-		String 
-		dat.updateUserPassword()
+		String cipher = aes.encrypt(ID + username + ID, password);
+		dat.updateUserPassword(cipher, ID);
 		
 	}
 	public static void existingMember() {

@@ -153,7 +153,18 @@ public class DBConnection {
 			se.printStackTrace();
 		}
 	}
-	
+	/*
+	 * Bind dynamic SQL parameter that has type bool.
+	 * This generic method takes data from its arguments.
+	 * WIP: Need to figure out how to use Java Generic to do this instead of making individuals method
+	 */
+	public void bindBoolStmt(boolean data, int order) {
+		try {
+			pstmt.setBoolean(order, data);
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+	}
 	/*
 	 * Bind dynamic SQL parameter that has type Date.
 	 * This generic method takes data from its arguments.
