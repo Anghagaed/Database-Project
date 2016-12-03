@@ -7,7 +7,7 @@ public class database {
 	static final String path = "jdbc:sqlite:Test/pwMan.db";					// example: "jdbc:sqlite:test.db"
 	String sql;
 	
-	database() {
+	public database() {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
@@ -36,7 +36,7 @@ public class database {
 	
 	public int UpdateDomainPass(int passID, int userID) throws SQLException{
 		sql = "UPDATE passwordentry SET p_domainpassword = ? WHERE p_id=? AND p_userid=?;";
-		dat.preptStmt(sql);
+		dat.prepStmt(sql);
 		dat.bindIntStmt(passID, 1);
 		dat.bindIntStmt(userID, 2);
 		int rs = dat.executeUpdateSQL();
