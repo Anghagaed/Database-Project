@@ -21,14 +21,9 @@
 
 /* 4. update note entry */
 	UPDATE notes
-<<<<<<< Updated upstream
 	SET n_entry = ?
 	WHERE n_id = (SELECT n_id FROM notes WHERE n_userid=? AND n_entry=?)
 	ORDER BY n_id ASC;
-=======
-	SET n_entry = 
-	WHERE n_id = (SELECT n_id FROM notes WHERE n_userid=? AND n_entry=?);
->>>>>>> Stashed changes
 
 /* 5. update domain stuff */
 	/* //update domainname*/
@@ -50,7 +45,7 @@
 /* 6. update wallet entry */
 	/* //update bankname */
 	UPDATE wallet
-	SET w_bankname = “
+	SET w_bankname = ?
 	WHERE w_id=? AND w_userid=?;
 	
 	/* //update cardtype */
@@ -89,6 +84,7 @@
 	SELECT count(*) 
 	FROM notes
 	WHERE n_userid=?;
+
 	/* n_userid for both query is the same */
 	INSERT INTO notes (n_id, n_entry, n_userid)
 	VALUES (?, ?, ?);
