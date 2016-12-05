@@ -768,18 +768,36 @@ public class database {
 
 	//NOT SURE IF THIS IS CORRECT EITHER // num 8
 	public int insertWalletEntry(int userID, String bankName, String cardType, String cardNum, String nameOnCard, String billAddress, int secCode, String expDate, int encryptStatus, String encryptionKey1, String encryptionKey2) throws SQLException {
-		sql = "SELECT count(*) as count FROM wallet WHERE w_userid=?;";
+		int count, temp, i, id;
+		sql = "SELECT count(*) AS ct FROM wallet WHERE w_userid=?;";
 		dat.prepStmt(sql);
 		dat.bindIntStmt(userID, 1);
 		ResultSet rs = dat.executeSQL();
-		
-		dat.clearStatement();
-		int walletID1 = rs.getInt("count"); //gets first column from resultset as int
-		int walletID = 0;
-		
-		if(walletID != walletID1){
-		walletID = walletID + 1;
+		count = rs.getInt("ct");
 		rs.close();
+		dat.clearStatement();
+		sql = "SELECT w_id FROM wallet WHERE w_userid=? ORDER BY w_id ASC;";
+		dat.prepStmt(sql);
+		dat.bindIntStmt(userID, 1);
+		rs = dat.executeSQL();
+		temp = -1;
+		i = 1;
+		while ( i <= count && rs.next()) {
+			temp = rs.getInt("w_id");
+			//System.out.println("i is " + i +"\ntemp is " + temp);
+			if (i != temp) {
+				break;
+			}
+			++i;
+		}
+		//System.out.println("count " + count + "\ntemp " + temp +"\ni "+i);
+		if (i == count + 1) {
+			//System.out.println("true");
+			id = i;
+		} else {
+			//System.out.println("false");
+			id = i;
+		}
 		sql = "INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_id, w_encryptstatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			
 		dat.prepStmt(sql);
@@ -792,9 +810,8 @@ public class database {
 		dat.bindIntStmt(secCode, 6);
 		dat.bindStringStmt(expDate, 7);
 		dat.bindIntStmt(userID, 8);
-		dat.bindIntStmt(walletID, 9);
+		dat.bindIntStmt(id, 9);
 		dat.bindIntStmt(encryptStatus, 10);
-		}
 		int result = dat.executeUpdateSQL();
 		return result;
 		
