@@ -63,7 +63,7 @@ public class AES {
         }
         return null;
     }
-    /*
+    
     public static void main(String[] args) 
     {
         final String secretKey = "hellotherehowu1234567890987654";
@@ -79,5 +79,5 @@ public class AES {
         System.out.println(encryptedString);
         System.out.println(decryptedString);
     }
-    */
+    
 }
