@@ -446,7 +446,7 @@ public class commandLine {
 		do{
 			System.out.println("*******************************************");
 			System.out.println("* Please choose an option:                *");
-			System.out.println("* 1. Add/Update Account Info              *");
+			System.out.println("* 1. Add Account Info                     *");
 			System.out.println("* 2. View Account Info                    *");
 			System.out.println("* 3. Edit Account Info                    *");
 			System.out.println("* 4. Delete Account                       *");
@@ -505,7 +505,47 @@ public class commandLine {
 	}
 	
 	public static void updateAccount(int userID){
+		String in;
+		int num;
+		sc.nextLine();
+		System.out.println("Which would you like to update?");
+		System.out.println("1. Name");
+		System.out.println("2. Email");
+		System.out.println("3. State");
+		System.out.println("4. City");
+		System.out.println("5. Street");
 		
+		num = sc.nextInt();
+		
+		if(num == 1){
+			System.out.println("Update name: ");
+			String name = sc.nextLine();
+		}
+		
+		if(num == 2){
+			System.out.println("Update Email: ");
+			String email = sc.nextLine();
+		}
+		
+		if(num == 3){
+		System.out.println("Update State: ");
+		String state = sc.nextLine();
+		}
+		
+		if(num == 4){
+		System.out.println("Update City: ");
+		String city = sc.nextLine();
+		}
+		
+		if(num == 5){
+		System.out.println("Update Street: ");
+		String street = sc.nextLine();
+		}
+		
+		else if(num <=0)
+			System.out.println("Please use valid number.");
+		
+		dat.updateAccountCity(city, ID, userID)
 	}
 	public static void deleteAccount(int userID){
 		
