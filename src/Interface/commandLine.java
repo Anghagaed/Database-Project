@@ -106,7 +106,7 @@ public class commandLine {
 			System.out.println("* 1. View Domain Entries                  *");
 			System.out.println("* 2. View Wallet Entries                  *");
 			System.out.println("* 3. View Note Entries                    *");
-			System.out.println("* 4. View Account Info                    *");
+			System.out.println("* 4. Account Info                         *");
 			System.out.println("* 5. Exit                                 *");
 			System.out.println("*******************************************");
 			input = sc.nextInt();
@@ -117,7 +117,7 @@ public class commandLine {
 			} else if (input == 3) {
 				startNote(userID);
 			} else if (input == 4) {
-				//startAccount(userID);
+				startAccount(userID);
 			} else if (input != 5) {
 				System.out.println("Please input in a valid number.");
 			}
@@ -335,7 +335,7 @@ public class commandLine {
 		System.out.println("Input Expiration Date: ");
 		input = sc.nextLine();
 		//get date input convert to sql date from java string
-		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("MM-yyyy");
 		java.util.Date date = sdf1.parse(input);
 		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 		java.sql.Date expDate = sqlDate;
@@ -361,7 +361,7 @@ public class commandLine {
 	public static void deleteWallet(int userID) throws SQLException, ParseException {
 		System.out.println("*******************************************");
 		System.out.println("* Please select which wallet to delete     *");
-		
+		System.out.println("*******************************************");
 		int i; int walletNo = 0;
 		int count = dat.howManyWallets(userID);
 		
@@ -378,7 +378,7 @@ public class commandLine {
 			dat.deleteWallet(walletNo, userID);
 			
 			System.out.println(" Wallet " + walletNo + " deleted.");
-			System.out.println("*******************************************");
+			//System.out.println("*******************************************");
 		}
 		else if(walletNo <= 0)
 		{
@@ -387,6 +387,71 @@ public class commandLine {
 		
 	}
 	public static void startAccount(int userID) throws SQLException {
+		int input = 0;
+		do{
+			System.out.println("*******************************************");
+			System.out.println("* Please choose an option:                *");
+			System.out.println("* 1. Add Account Info                     *");
+			System.out.println("* 2. View Account Info                    *");
+			System.out.println("* 3. Edit Account Info                    *");
+			System.out.println("* 4. Delete Account                       *");
+			System.out.println("* 5. Exit                                 *");
+			System.out.println("*******************************************");
+			input = sc.nextInt();
+			if(input == 1)
+			{
+				insertAccount(userID);
+			}
+			else if(input == 2)
+			{
+				displayAccount(userID);
+			}
+			else if(input == 3)
+			{
+				updateAccount(userID);
+			}
+			else if(input == 4)
+			{
+				deleteAccount(userID);
+			}
+			else if(input != 5)
+			{
+				System.out.println("Please choose a valid number.");
+			}
+		} while (input > 0 && input != 4);
+	}
+	
+	public static void insertAccount(int userID){
+		String in;
+		System.out.println("Enter Name: ");
+		String name = sc.nextLine();
+		
+		System.out.println("Enter Email: ");
+		String email = sc.nextLine();
+		
+		System.out.println("Enter State: ");
+		String state = sc.nextLine();
+		
+		System.out.println("Enter City: ");
+		String city = sc.nextLine();
+		
+		System.out.println("Enter Street: ");;
+		String street = sc.nextLine();
+		
+		System.out.println("Enter );
+		
+		dat.insertAccount(userID);
+	}
+	
+	public static void displayAccount(int userID) throws SQLException{
+		dat.displayAccountinfo(userID);
+	}
+	
+	public static void updateAccount(int userID){
 		
 	}
+	public static void deleteAccount(int userID){
+		
+	}
+	
 }
