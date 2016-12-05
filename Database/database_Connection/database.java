@@ -767,7 +767,7 @@ public class database {
 
 
 	//NOT SURE IF THIS IS CORRECT EITHER // num 8
-	public int insertWalletEntry(int userID, String bankName, String cardType, String cardNum, String nameOnCard, String billAddress, int secCode, Date expDate, int encryptStatus, String encryptionKey1, String encryptionKey2) throws SQLException {
+	public int insertWalletEntry(int userID, String bankName, String cardType, String cardNum, String nameOnCard, String billAddress, int secCode, String expDate, int encryptStatus, String encryptionKey1, String encryptionKey2) throws SQLException {
 		sql = "SELECT count(*) FROM wallet WHERE w_userid=?;";
 		dat.prepStmt(sql);
 		dat.bindIntStmt(userID, 1);
@@ -787,7 +787,7 @@ public class database {
 		dat.bindStringStmt(nameOnCard, 4);
 		dat.bindStringStmt(billAddress, 5);
 		dat.bindIntStmt(secCode, 6);
-		dat.bindDateStmt(expDate, 7);
+		dat.bindStringStmt(expDate, 7);
 		dat.bindIntStmt(userID, 8);
 		dat.bindIntStmt(walletID, 9);
 		dat.bindIntStmt(encryptStatus, 10);

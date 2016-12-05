@@ -393,16 +393,15 @@ public class commandLine {
 		System.out.println("Input Security Code (000): ");
 		int secCode = sc.nextInt();
 		sc.nextLine();
-		System.out.println("Input Expiration Date (MM-YY): ");
+		System.out.println("Input Expiration Date (MM-YYYY): ");
+		String expDate = sc.nextLine();
 		//get date input convert to sql date from java string
-		SimpleDateFormat sdf1 = new SimpleDateFormat("MM-yy");
+		/*SimpleDateFormat format = new SimpleDateFormat("MM-YYYY");
 		input = sc.nextLine();
-		//java.sql.Date.valueOf(input);
-		//java.util.Date expDate = sdf1.parse(input);
-		java.util.Date date = sdf1.parse(input);
+		java.util.Date date = format.parse(input);
 		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 		java.sql.Date expDate = sqlDate;
-		
+		*/
 		System.out.println("Would you like to encrypt this wallet? 1 for yes, 0 for no");
 		int encryptStatus = sc.nextInt();
 		sc.nextLine();
