@@ -130,24 +130,74 @@ public class commandLine {
 			System.out.println("* 1. View Domain Information              *");
 			System.out.println("* 2. Add New Domain Information           *");
 			System.out.println("* 3. Delete Domain Information            *");
-			System.out.println("* 4. Exit to Main Screen                  *");
+			System.out.println("* 4. Edit Domain Information              *");
+			System.out.println("* 5. Exit to Main Screen                  *");
 			System.out.println("*******************************************");
 			input = sc.nextInt();
 			sc.nextLine();
 			if (input == 1) {
-				viewDomain(userID);
+				viewDomain(userID, 1);
 			} else if (input == 2) {
 				addNewDomain(userID);
 			} else if (input == 3) {
 				deleteExistingDomain(userID);
-			} else if (input != 4) {
+			} else if (input == 4) {
+				editExistingDomain(userID);
+			} else if (input != 5) {
 				System.out.println("Please input in a valid number.");
 			}
-		} while (input != 4);
+		} while (input != 5);
 	}
 	
-	public static void viewDomain(int userID) throws SQLException {
-		if(dat.listOfDomain(userID) == 1) {
+	public static void editExistingDomain(int userID) throws SQLException {
+		viewDomain(userID, 0);
+		int input = -1;
+		do {
+			System.out.println("*******************************************");
+			System.out.println("* Do you want to edit any existing domain?*");
+			System.out.println("* 1. Yes                                  *");
+			System.out.println("* 2. No                                   *");
+			System.out.println("*******************************************");
+			input = sc.nextInt();
+			sc.nextLine();
+			if (input == 1) {
+				System.out.println("Please input in the domain name you wish to edit: ");
+				String domainname = sc.nextLine();
+				int exist = dat.getDomainExist(domainname, userID);
+				if (exist != 0) {
+					int input2 = -1;
+					do {
+						System.out.println("*******************************************");
+						System.out.println("* Please choose what to edit:             *");
+						System.out.println("* 1. Domain Name                          *");
+						System.out.println("* 2. Username                             *");
+						System.out.println("* 3. Password                             *");
+						System.out.println("* 4. Exit                                 *");
+						System.out.println("*******************************************");
+						input2 = sc.nextInt();
+						sc.nextLine();
+						if (input2 == 1) {
+							
+						} else if (input2 == 2) {
+							
+						} else if (input2 == 3) {
+							
+						} else if (input 2 != 4) {
+							System.out.println("Please input in a valid option.");
+						}
+					} while (input2 != 4);
+				} else {
+					System.out.println("This domain does not exist in the database!");
+				}
+				break;
+			} else if (input != 2) {
+				System.out.println("Please input in a valid number.");
+			}
+		} while (input != 2)
+	}
+	
+	public static void viewDomain(int userID, int which) throws SQLException {
+		if(dat.listOfDomain(userID) == 1 && which == 1) {
 			int input = 0;
 			String input2 = "";
 			do {
@@ -219,7 +269,8 @@ public class commandLine {
 			System.out.println("* 1. View Note Information                *");
 			System.out.println("* 2. Add New Note Information             *");
 			System.out.println("* 3. Delete Note Information              *");
-			System.out.println("* 4. Exit to Main Screen                  *");
+			System.out.println("* 4. Edit Note Information                *");
+			System.out.println("* 5. Exit to Main Screen                  *");
 			System.out.println("*******************************************");
 			input = sc.nextInt();
 			sc.nextLine();
@@ -229,16 +280,20 @@ public class commandLine {
 				addNewNote(userID);
 			} else if (input == 3) {
 				deleteExistingNote(userID);
-			} else if (input != 4) {
+			} else if (input == 4) {
+				editExistingNote(userID);
+			} else if (input != 5) {
 				System.out.println("Please input in a valid number.");
 			}
-		} while (input != 4);
+		} while (input != 5);
 	}
-	
 	public static void viewNote(int userID) throws SQLException {
 		String UN = dat.getUserName(userID);
 		String key = userID + UN + userID;
 		dat.listOfNotes(userID, key);
+	}
+	public static void editExistingNote(int userID) {
+		
 	}
 	public static void addNewNote(int userID) throws SQLException {
 		String UN = dat.getUserName(userID);

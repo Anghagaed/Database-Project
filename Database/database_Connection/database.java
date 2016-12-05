@@ -21,15 +21,27 @@ public class database {
 		dat.createConnection();
 		sql = null;
 	}
+	public int getDomainExist(String domainname, int userID) throws SQLException {
+		sql = "SELECT count(*) AS ct FROM passwordentry WHERE p_domainname=? AND p_userID=?;";
+		dat.prepStmt(sql);
+		dat.bindStringStmt(domainname, 1);
+		dat.bindIntStmt(userID, 2);
+		ResultSet rs = dat.executeSQL();
+		int result = rs.getInt("ct");
+		rs.close();
+		return result;
+	}
 	public boolean getUserEncryptionStatus(String domainname, int userID) throws SQLException {
 		sql = "SELECT p_encryptstatus FROM passwordentry WHERE p_domainname=? AND p_userID=?;";
 		dat.prepStmt(sql);
 		dat.bindStringStmt(domainname, 1);
 		dat.bindIntStmt(userID, 2);
 		ResultSet rs = dat.executeSQL();
+		boolean output = false;rs.getBoolean("p_encryptstatus");
 		if (rs.next())
-			return rs.getBoolean("p_encryptstatus");
-		return false;
+			output = rs.getBoolean("p_encryptstatus");
+		rs.close();
+		return output;
 	}
 	public int getUserID(String username) throws SQLException {
 		sql = "SELECT u_userid FROM user WHERE u_username=?;";
@@ -318,6 +330,36 @@ public class database {
 		int result = dat.executeUpdateSQL();
 		dat.clearStatement();
 		return result;
+	}
+	public int updatePWEPass(String newPass, String domain, int userID) throws SQLException {
+		sql = "SELECT p_id FROM passwordentry WHERE p_domainname=? AND p_userID=?;";
+		dat.prepStmt(sql);
+		dat.bindStringStmt(domain, 1);
+		dat.bindIntStmt(userID, 2);
+		ResultSet rs = dat.executeSQL();
+		int id = rs.getInt("p_id");
+		rs.close();
+		dat.clearStatement();
+		sql = "UPDATE passwordentry SET p_domainpassword=? WHERE p_id=? AND p_userid=?;";
+		dat.prepStmt(sql);
+		//dat.bindStringStmt(newPass)
+		return 0;
+	}
+	public int updatePWEDName(String newDomain, String domain, int userID) throws SQLException {
+		sql = "SELECT p_id FROM passwordentry WHERE p_domainname=? AND p_userID=?;";
+		dat.prepStmt(sql);
+		dat.bindStringStmt(domain, 1);
+		dat.bindIntStmt(userID, 2);
+		ResultSet rs = dat.executeSQL();
+		int id = rs.getInt("p_id");
+		rs.close();
+		dat.clearStatement();
+		sql = "UPDATE passwordentry SET p_domainname=? WHERE p_id=? AND p_userid=?;";
+		return 1;
+	}
+	public int updatePWEUName(String newName, String domain, int userID) {
+		sql = "UPDATE passwordentry SET p_domainusername=? WHERE p_id=? AND p_userid=?;";
+		return 1;
 	}
 	
 	public int insertUser(String username) throws SQLException {
