@@ -3,6 +3,8 @@ import database_Connection.*;
 import AES.*;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 // Command Line User Interface
 public class commandLine {
@@ -15,12 +17,12 @@ public class commandLine {
 	public commandLine() {
 		
 	}
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, ParseException {
 		startScreen();
 		dat.close();
 	}
 	
-	public static void startScreen() throws SQLException {
+	public static void startScreen() throws SQLException, ParseException {
 		// Start Screen
 		int result = 0;
 		do {
@@ -75,7 +77,7 @@ public class commandLine {
 		String cipher = aes.encrypt(password, ID + username + ID);
 		dat.updateUserPassword(cipher, ID);
 	}
-	public static void existingMember() throws SQLException {
+	public static void existingMember() throws SQLException, ParseException {
 		String username, password;
 		System.out.println("Please input in your username and password.");
 		System.out.print(  "Username: ");
@@ -96,7 +98,7 @@ public class commandLine {
 			mainScreen(userID);
 		}
 	}
-	public static void mainScreen(int userID) throws SQLException {
+	public static void mainScreen(int userID) throws SQLException, ParseException {
 		int input = 0;
 		do{
 			System.out.println("*******************************************");
@@ -111,7 +113,7 @@ public class commandLine {
 			if (input == 1) {
 				startDomain(userID);
 			} else if (input == 2) {
-				//startWallet(userID);
+				startWallet(userID);
 			} else if (input == 3) {
 				startNote(userID);
 			} else if (input == 4) {
@@ -259,5 +261,132 @@ public class commandLine {
 		else {
 			System.out.println("Nothing to delete");
 		}
+	}
+	
+	public static void startWallet(int userID) throws SQLException, ParseException{
+		int input = 0;
+		do{
+			System.out.println("*******************************************");
+			System.out.println("* What do you wish to do?                 *");
+			System.out.println("* 1. View Wallets                         *");
+			System.out.println("* 2. Insert New Wallet                    *");
+			System.out.println("* 3. Delete Wallet                        *");
+			System.out.println("* 4. Exit                                 *");
+			System.out.println("*******************************************");
+			input = sc.nextInt();
+			if(input == 1 || input == 2 || input == 3)
+			{
+				if(input == 1) //done but not checked
+					viewWallets(userID);
+				if(input == 2)
+					insertWallet(userID);
+				if(input == 3)
+					deleteWallet(userID);
+				else if (input > 4 || input <= 0)
+					System.out.println("Pleas input valid number.");
+				
+			}
+		} while (input != 4);
+	}
+	
+	public static void viewWallets(int userID) throws SQLException {
+		int i; int input = 0;
+		int count = dat.howManyWallets(userID);
+		System.out.println("*******************************************");
+		for(i=1; i <= count; i++)
+		{
+			System.out.println("* Wallet " + i + "                                *");
+		}
+		System.out.println("*******************************************");
+		input = sc.nextInt();
+		if(input <= count && input > 0) { dat.displayWallet(input, userID);}
+		
+		else if (input <= 0)
+			System.out.println("Please input valid number.");
+	}
+
+	public static void insertWallet(int userID) throws SQLException, ParseException{
+		String UN = dat.getUserName(userID);
+		String key = userID + UN + userID;
+		int walletID = dat.howManyWallets(userID);
+		walletID = walletID + 1;
+		String input;
+		sc.nextLine();
+		
+		
+		System.out.println("Input Bank Name: ");
+		String bankName = sc.nextLine();
+		
+		System.out.println("Input Card Type: ");
+		String cardType = sc.nextLine();
+		
+		System.out.println("Input Card Number: ");
+		String cardNum = sc.nextLine();
+		
+		System.out.println("Input Name on Card: ");
+		String nameOnCard = sc.nextLine();
+		
+		System.out.println("Input Billing Address: ");
+		String billAddress = sc.nextLine();
+		
+		System.out.println("Input Security Code: ");
+		int secCode = sc.nextInt();
+		sc.nextLine();
+		System.out.println("Input Expiration Date: ");
+		input = sc.nextLine();
+		//get date input convert to sql date from java string
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+		java.util.Date date = sdf1.parse(input);
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		java.sql.Date expDate = sqlDate;
+		
+		System.out.println("Would you like to encrypt this wallet? 1 for yes, 0 for no");
+		int encryptStatus = sc.nextInt();
+		sc.nextLine();
+		if(encryptStatus == 1){
+			System.out.println("Please input a key: ");
+			String encryptionKey = sc.nextLine();
+			dat.insertWalletEntry(userID, bankName, cardType, cardNum, nameOnCard, billAddress, secCode, expDate, 1, key, encryptionKey);
+		}
+		else {
+			dat.insertWalletEntry(userID, bankName, cardType, cardNum, nameOnCard, billAddress, secCode, expDate, 0, key, "");
+		}
+		
+
+		System.out.println("* New Wallet Created.                     *");
+		System.out.println("*******************************************");
+		
+	}
+	
+	public static void deleteWallet(int userID) throws SQLException, ParseException {
+		System.out.println("*******************************************");
+		System.out.println("* Please select which wallet to delete     *");
+		
+		int i; int walletNo = 0;
+		int count = dat.howManyWallets(userID);
+		
+		for(i=1; i <= count; i++)
+		{
+			System.out.println("*******************************************");
+			System.out.println("* Wallet " + i + "                             *");
+			System.out.println("*******************************************");
+		}
+		
+		walletNo = sc.nextInt();
+		sc.nextLine();
+		if(walletNo <= count || walletNo > 0) { 
+			dat.deleteWallet(walletNo, userID);
+			
+			System.out.println(" Wallet " + walletNo + " deleted.");
+			System.out.println("*******************************************");
+		}
+		else if(walletNo <= 0)
+		{
+			System.out.println("Please input a valid number.");
+		}
+		
+	}
+	public static void startAccount(int userID) throws SQLException {
+		
 	}
 }
