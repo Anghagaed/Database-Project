@@ -394,9 +394,11 @@ public class commandLine {
 		int secCode = sc.nextInt();
 		sc.nextLine();
 		System.out.println("Input Expiration Date (MM-YY): ");
-		input = sc.nextLine();
 		//get date input convert to sql date from java string
-		SimpleDateFormat sdf1 = new SimpleDateFormat("MM-yyyy");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("MM-yy");
+		input = sc.nextLine();
+		//java.sql.Date.valueOf(input);
+		//java.util.Date expDate = sdf1.parse(input);
 		java.util.Date date = sdf1.parse(input);
 		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 		java.sql.Date expDate = sqlDate;
@@ -456,8 +458,7 @@ public class commandLine {
 			System.out.println("* 1. Add Account Info                     *");
 			System.out.println("* 2. View Account Info                    *");
 			System.out.println("* 3. Edit Account Info                    *");
-			System.out.println("* 4. Delete Account                       *");
-			System.out.println("* 5. Exit to Main Screen                  *");
+			System.out.println("* 4. Exit to Main Screen                  *");
 			System.out.println("*******************************************");
 			input = sc.nextInt();
 			if(input == 1)
@@ -472,15 +473,11 @@ public class commandLine {
 			{
 				updateAccount(userID);
 			}
-			else if(input == 4)
-			{
-				deleteAccount(userID);
-			}
-			else if(input != 5)
+			else if(input != 4)
 			{
 				System.out.println("Please choose a valid number.");
 			}
-		} while (input >= 0 && input < 5);
+		} while (input >= 0 && input < 4);
 	}
 	
 	public static void insertAccount(int userID) throws SQLException{
@@ -563,10 +560,10 @@ public class commandLine {
 	
 	}
 	
-	public static void deleteAccount(int userID) throws SQLException{
+	/*public static void deleteAccount(int userID) throws SQLException{
 		int id = dat.getAccID(userID);
 		dat.deleteAccount(id, userID);
 		System.out.println("Account information deleted.");
-	}
+	}*/
 	
 }
