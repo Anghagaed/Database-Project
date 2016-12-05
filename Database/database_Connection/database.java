@@ -240,6 +240,11 @@ public class database {
 		
 		
 	}
+	public int getAccID(int userID){
+		
+	}
+	
+	public int updateAccountInfo(int accID, int userID, String name, String )
 
 	// Need to be worked on.
 	public int insertAccInfo(int userID, String cName, String email, String state, String city, String street, int subStatus) throws SQLException {
