@@ -768,13 +768,16 @@ public class database {
 
 	//NOT SURE IF THIS IS CORRECT EITHER // num 8
 	public int insertWalletEntry(int userID, String bankName, String cardType, String cardNum, String nameOnCard, String billAddress, int secCode, String expDate, int encryptStatus, String encryptionKey1, String encryptionKey2) throws SQLException {
-		sql = "SELECT count(*) FROM wallet WHERE w_userid=?;";
+		sql = "SELECT count(*) as count FROM wallet WHERE w_userid=?;";
 		dat.prepStmt(sql);
 		dat.bindIntStmt(userID, 1);
 		ResultSet rs = dat.executeSQL();
 		
 		dat.clearStatement();
-		int walletID = rs.getInt(1); //gets first column from resultset as int
+		int walletID1 = rs.getInt("count"); //gets first column from resultset as int
+		int walletID = 0;
+		
+		if(walletID != walletID1){
 		walletID = walletID + 1;
 		rs.close();
 		sql = "INSERT INTO wallet (w_bankname, w_cardtype, w_cardnum, w_nameoncard, w_billingaddress, w_securitycode, w_expirationdate, w_userid, w_id, w_encryptstatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -791,9 +794,10 @@ public class database {
 		dat.bindIntStmt(userID, 8);
 		dat.bindIntStmt(walletID, 9);
 		dat.bindIntStmt(encryptStatus, 10);
-			
+		}
 		int result = dat.executeUpdateSQL();
 		return result;
+		
 	}
 	
 	public int howManyWallets(int userID) throws SQLException {
