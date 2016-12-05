@@ -6,6 +6,7 @@ primary key (u_userid));
 
 create table notes(
 n_id decimal(8,0) not null,
+n_title varchar(150) not null,
 n_entry varchar(150) not null, 
 n_userid decimal(8,0) not null, 
 n_encryptid decimal(6,0), 

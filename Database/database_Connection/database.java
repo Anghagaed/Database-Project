@@ -2,10 +2,13 @@ package database_Connection;
 
 import java.sql.*;
 
+import AES.*;
+
 public class database {
 	DBConnection dat;
 	static final String path = "jdbc:sqlite:Test/pwMan.db";					// example: "jdbc:sqlite:test.db"
 	String sql;
+	static AES aes = new AES();
 	
 	public database() {
 		try {
@@ -18,6 +21,16 @@ public class database {
 		dat.createConnection();
 		sql = null;
 	}
+	public boolean getUserEncryptionStatus(String domainname, int userID) throws SQLException {
+		sql = "SELECT p_encryptstatus FROM passwordentry WHERE p_domainname=? AND p_userID=?;";
+		dat.prepStmt(sql);
+		dat.bindStringStmt(domainname, 1);
+		dat.bindIntStmt(userID, 2);
+		ResultSet rs = dat.executeSQL();
+		if (rs.next())
+			return rs.getBoolean("p_encryptstatus");
+		return false;
+	}
 	public int getUserID(String username) throws SQLException {
 		sql = "SELECT u_userid FROM user WHERE u_username=?;";
 		dat.prepStmt(sql);
@@ -25,6 +38,17 @@ public class database {
 		ResultSet rs = dat.executeSQL();
 		int result = rs.getInt("u_userid");
 		rs.close();
+		dat.clearStatement();
+		return result;
+	}
+	public String getUserName(int userID) throws SQLException {
+		sql = "SELECT u_username FROM user WHERE u_userid=?;";
+		dat.prepStmt(sql);
+		dat.bindIntStmt(userID, 1);
+		ResultSet rs = dat.executeSQL();
+		String result = rs.getString("u_username");
+		rs.close();
+		dat.clearStatement();
 		return result;
 	}
 	public String getUserPassword(String username) throws SQLException {
@@ -34,23 +58,118 @@ public class database {
 		ResultSet rs = dat.executeSQL();
 		String result = rs.getString("u_cipher");
 		rs.close();
+		dat.clearStatement();
 		return result;
 	}
-	
-	public void displayUserNPass(String domainname, int userID) throws SQLException {
-		sql = "SELECT p_domainusername, p_domainpassword FROM passwordentry WHERE p_domainname=? AND p_userid=?;";
+	public int listOfNotes(int userID, String key) throws SQLException {
+		sql = "SELECT count(*) AS ct FROM notes WHERE n_userid=?;";
 		dat.prepStmt(sql);
-		dat.bindStringStmt(domainname, 1); //1 is example - need real domainname
-		dat.bindIntStmt(userID, 2); //userid start with what #? look up & replace '2'
+		dat.bindIntStmt(userID, 1);
 		ResultSet rs = dat.executeSQL();
-		
-		String username = rs.getString("p_domainusername");
-		String password = rs.getString("p_domainpassword");
-		
-		System.out.println("Username :" + username);
-		System.out.println("Passowrd :" + password);
+		int result = rs.getInt("ct");
 		rs.close();
 		dat.clearStatement();
+		if (result != 0) {
+			sql = "SELECT n_title, n_entry FROM notes WHERE n_userid=?;";
+			dat.prepStmt(sql);
+			dat.bindIntStmt(userID, 1);
+			rs = dat.executeSQL();
+			String output = "";
+			while (rs.next()) {
+				output += rs.getString("n_title");
+				output += ": ";
+				String cipher = rs.getString("n_entry");
+				String content = aes.decrypt(cipher, key);
+				output += content;
+				output += "\n";
+			}
+			System.out.println(output);
+			return 1;
+		} else {
+			System.out.println("There are no notes information available");
+			return 0;
+		}
+	}
+	public void displayDomainInformation(String domainname, int userID, String userKey) throws SQLException {
+		sql = "SELECT p_encryptstatus FROM passwordentry WHERE p_domainname=? AND p_userID=?;";
+		dat.prepStmt(sql);
+		dat.bindStringStmt(domainname, 1);
+		dat.bindIntStmt(userID, 2);
+		ResultSet rs = dat.executeSQL();
+		int encryptStatus = -1;
+		if (rs.next()) {
+			encryptStatus = rs.getInt("p_encryptstatus");
+		}
+		rs.close();
+		dat.clearStatement();
+		if (encryptStatus == 1) {
+			sql = "SELECT p_domainusername, p_domainpassword FROM passwordentry WHERE p_domainname=? AND p_userID=?;";
+			dat.prepStmt(sql);
+			dat.bindStringStmt(domainname, 1);
+			dat.bindIntStmt(userID, 2);
+			rs = dat.executeSQL();
+			dat.clearStatement();
+			String dUsername = rs.getString("p_domainusername");
+			String cipher = rs.getString("p_domainpassword");
+			rs.close();
+			sql = "SELECT u_username FROM user WHERE u_userid=?;";
+			dat.prepStmt(sql);
+			dat.bindIntStmt(userID, 1);
+			rs = dat.executeSQL();
+			String userName = rs.getString("u_username");
+			rs.close();
+			dat.clearStatement();
+			String password = aes.decrypt(aes.decrypt(cipher, userKey), userID + userName + userID);
+			System.out.println("Username: " + dUsername);
+			System.out.println("Password: " + password);
+		} else if (encryptStatus == 0){
+			sql = "SELECT p_domainusername, p_domainpassword FROM passwordentry WHERE p_domainname=? AND p_userID=?;";
+			dat.prepStmt(sql);
+			dat.bindStringStmt(domainname, 1);
+			dat.bindIntStmt(userID, 2);
+			rs = dat.executeSQL();
+			dat.clearStatement();
+			String dUsername = rs.getString("p_domainusername");
+			String cipher = rs.getString("p_domainpassword");
+			rs.close();
+			sql = "SELECT u_username FROM user WHERE u_userid=?;";
+			dat.prepStmt(sql);
+			dat.bindIntStmt(userID, 1);
+			rs = dat.executeSQL();
+			String userName = rs.getString("u_username");
+			rs.close();
+			dat.clearStatement();
+			String password = aes.decrypt(cipher, userID + userName + userID);
+			System.out.println("Username: " + dUsername);
+			System.out.println("Password: " + password);
+		} else if (encryptStatus == -1){
+			System.out.println("Input domain does not exist in the system.");
+		}
+	}
+	
+	public int listOfDomain(int userID) throws SQLException {
+		sql = "SELECT count(*) AS ct FROM passwordentry WHERE p_userid=?;";
+		dat.prepStmt(sql);
+		dat.bindIntStmt(userID, 1);
+		ResultSet rs = dat.executeSQL();
+		int result = rs.getInt("ct");
+		rs.close();
+		dat.clearStatement();
+		if (result != 0) {
+			sql = "SELECT p_domainname FROM passwordentry WHERE p_userid=?;";
+			dat.prepStmt(sql);
+			dat.bindIntStmt(userID, 1);
+			rs = dat.executeSQL();
+			String output = "";
+			while (rs.next()) {
+				output += rs.getString("p_domainname");
+				output += "\n";
+			}
+			System.out.println(output);
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 	// Need to be worked on.
@@ -73,6 +192,7 @@ public class database {
 		dat.bindStringStmt(street, 7);
 		dat.bindBoolStmt(subStatus, 8);
 		int result = dat.executeUpdateSQL();
+		dat.clearStatement();
 		
 		return result;
 	}
@@ -148,50 +268,76 @@ public class database {
 		dat.clearStatement();
 		return userID;
 	}
-	public int insertPWEntry(String domainname, int userID, String username, String passw) throws SQLException {
+	public int insertPWEntry(String domainname, int userID, String username, String passw, int encryptStatus, String encryptionKey1, String encryptionKey2) throws SQLException {
 		// Generate ID by count of all existing entry for the user;
+		// EncryptionKey1 is standard encryption
+		// EncryptionKey2 is user input additional encryption
 		int count, temp, i, id;
-		sql = "SELECT count(*) AS ct FROM passwordentry;";
+		sql = "SELECT count(*) AS ct FROM passwordentry WHERE p_userid=?;";
 		dat.prepStmt(sql);
+		dat.bindIntStmt(userID, 1);
 		ResultSet rs = dat.executeSQL();
 		count = rs.getInt("ct");
 		rs.close();
 		dat.clearStatement();
-		sql = "SELECT p_id FROM passwordentry ORDER BY ASC;";
+		sql = "SELECT p_id FROM passwordentry WHERE p_userid=? ORDER BY p_id ASC;";
 		dat.prepStmt(sql);
+		dat.bindIntStmt(userID, 1);
 		rs = dat.executeSQL();
 		temp = -1;
 		i = 1;
-		while ( i <= count) {
+		while ( i <= count && rs.next()) {
 			temp = rs.getInt("p_id");
+			//System.out.println("i is " + i +"\ntemp is " + temp);
 			if (i != temp) {
 				break;
 			}
 			++i;
-		}		
-		if (temp == count)
-			id = count + 1;
-		else 
+		}
+		//System.out.println("count " + count + "\ntemp " + temp +"\ni "+i);
+		if (i == count + 1) {
+			//System.out.println("true");
 			id = i;
-		//
-		sql = "INSERT INTO passwordentry" + 
-				" (p_id, p_domainname, p_userid, p_domainusername, p_domainpassword)" +
-				" VALUES (?, ?, ?, ?, ?);";
-		dat.prepStmt(sql);
-		dat.bindIntStmt(id, 1);
-		dat.bindStringStmt(domainname, 2);
-		dat.bindIntStmt(userID, 3);
-		dat.bindStringStmt(username, 4);
-		dat.bindStringStmt(passw, 5);
-		int result = dat.executeUpdateSQL();
-		dat.clearStatement();
-		return result;
+		} else {
+			//System.out.println("false");
+			id = i;
+		}
+		//System.out.println("count is " + count);
+		//System.out.println("id is " + id);
+		if (encryptStatus == 1) {			// two layer encryption
+			sql = "INSERT INTO passwordentry (p_id, p_domainname, p_userid, p_domainusername, p_domainpassword, p_encryptstatus) "
+			+ "VALUES (?, ?, ?, ?, ?, 1);";
+			String cipher = aes.encrypt(aes.encrypt(passw, encryptionKey1), encryptionKey2);
+			dat.prepStmt(sql);
+			dat.bindIntStmt(id, 1);
+			dat.bindStringStmt(domainname, 2);
+			dat.bindIntStmt(userID, 3);
+			dat.bindStringStmt(username, 4);
+			dat.bindStringStmt(cipher, 5);
+			int result = dat.executeUpdateSQL();
+			dat.clearStatement();
+			return result;
+		} else {							// one layer encryption
+			sql = "INSERT INTO passwordentry (p_id, p_domainname, p_userid, p_domainusername, p_domainpassword, p_encryptstatus) "
+			+ "VALUES (?, ?, ?, ?, ?, 0);";
+			String cipher = aes.encrypt(passw, encryptionKey1);
+			dat.prepStmt(sql);
+			dat.bindIntStmt(id, 1);
+			dat.bindStringStmt(domainname, 2);
+			dat.bindIntStmt(userID, 3);
+			dat.bindStringStmt(username, 4);
+			dat.bindStringStmt(cipher, 5);
+			int result = dat.executeUpdateSQL();
+			dat.clearStatement();
+			return result;
+		}
+
 	}
 	
-	public int deletePWEntry(int id, int userID) {
-		sql = "DELETE FROM passwordentry WHERE p_id=? AND p_userid=?;";
+	public int deletePWEntry(String domainname, int userID) {
+		sql = "DELETE FROM passwordentry WHERE p_domainname=? AND p_userid=?;";
 		dat.prepStmt(sql);
-		dat.bindIntStmt(id, 1);
+		dat.bindStringStmt(domainname, 1);
 		dat.bindIntStmt(userID, 2);
 		int result = dat.executeUpdateSQL();
 		dat.clearStatement();
@@ -208,10 +354,10 @@ public class database {
 		return result;
 	}
 	
-	public int deleteNote(int id, int userID) {
-		sql = "DELETE FROM notes WHERE n_id=? AND n_userid=?;";
+	public int deleteNote(String title, int userID) {
+		sql = "DELETE FROM notes WHERE n_title=? AND n_userid=?;";
 		dat.prepStmt(sql);
-		dat.bindIntStmt(id, 1);
+		dat.bindStringStmt(title, 1);
 		dat.bindIntStmt(userID, 2);
 		int result = dat.executeUpdateSQL();
 		dat.clearStatement();
@@ -416,21 +562,40 @@ public class database {
 	}
 
 	//NOT SURE IF THIS ONE IS CORRECT //num 7
-	public int insertNoteEntry(int userID, String noteEntry) throws SQLException {
-		sql = "SELECT count(*) AS count  FROM notes WHERE n_userid=?;";
+	public int insertNoteEntry(int userID, String noteContent, String noteTitle) throws SQLException {
+		int count, temp, i, id;
+		sql = "SELECT count(*) AS ct FROM notes WHERE n_userid=?;";
 		dat.prepStmt(sql);
 		dat.bindIntStmt(userID, 1);
 		ResultSet rs = dat.executeSQL();
-		
-		int noteID = rs.getInt("count"); //takes in 1st column of resultset as int
-		noteID = noteID + 1;
+		count = rs.getInt("ct");
+		rs.close();
 		dat.clearStatement();
-			
-		sql = "INSERT INTO notes (n_id, n_entry, n_userid) VALUES (?, ?, ?);";
+		sql = "SELECT n_id FROM notes WHERE n_userid=? ORDER BY n_id ASC;";
 		dat.prepStmt(sql);
-		dat.bindIntStmt(noteID, 1);
-		dat.bindStringStmt(noteEntry, 2);
+		dat.bindIntStmt(userID, 1);
+		rs = dat.executeSQL();
+		temp = -1;
+		i = 1;
+		
+		while ( i <= count && rs.next()) {
+			temp = rs.getInt("n_id");
+			if (i != temp) {
+				break;
+			}
+			++i;
+		}
+		if (i == count + 1) {
+			id = i;
+		} else {
+			id = i;
+		}
+		sql = "INSERT INTO notes (n_id, n_entry, n_userid, n_title, n_encryptstatus) VALUES (?, ?, ?, ?, 0);";
+		dat.prepStmt(sql);
+		dat.bindIntStmt(id, 1);
+		dat.bindStringStmt(noteContent, 2);
 		dat.bindIntStmt(userID, 3);
+		dat.bindStringStmt(noteTitle, 4);
 		int result = dat.executeUpdateSQL();
 		return result;
 	}
@@ -463,5 +628,8 @@ public class database {
 			
 		int result = dat.executeUpdateSQL();
 		return result;
-		}
+	}
+	public void close() {
+		dat.closeConnection();
+	}
 }

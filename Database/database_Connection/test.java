@@ -4,6 +4,7 @@ import java.sql.*;
 public class test {
 	
 	public static void main(String[] args) throws SQLException {
+		/*
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
@@ -12,6 +13,8 @@ public class test {
 		}
 		database dat = new database();
 		dat.displayUserNPass("www.google.com", 1);
+		*/
 	}
+	
 
 }
