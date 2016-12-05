@@ -170,9 +170,9 @@ public class DBConnection {
 	 * This generic method takes data from its arguments.
 	 * WIP: Need to figure out how to use Java Generic to do this instead of making individuals method
 	 */
-	public void bindDateStmt(java.sql.Date data, int order) {
+	public void bindDateStmt(java.util.Date data, int order) {
 		try {
-			pstmt.setDate(order, data);
+			pstmt.setDate(order, (Date) data);
 		} catch (SQLException se) {
 			se.printStackTrace();
 		}
