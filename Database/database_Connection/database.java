@@ -172,7 +172,7 @@ public class database {
 		}
 	}
 	
-	public int insertAccount(int userID, String name, String email, String state, String city, String street, int substatus, Date subexpdate) throws SQLException {
+	public int insertAccount(int userID, String name, String email, String state, String city, String street) throws SQLException {
 		sql = "SELECT COUNT(*) as count FROM accountinfo WHERE ai_userid = ?";
 		dat.prepStmt(sql);
 		dat.bindIntStmt(userID, 1);
@@ -181,27 +181,26 @@ public class database {
 		rs.close();
 		dat.clearStatement();
 		
-		sql = "INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus, ai_subexpdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+		sql = "INSERT INTO accountinfo (ai_id, ai_userid, ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus) VALUES (?, ?, ?, ?, ?, ?, ?, 0);";
 		dat.prepStmt(sql);
 		count = count + 1;
 		dat.bindIntStmt(count, 1);
 		dat.bindIntStmt(userID, 2);
 		dat.bindStringStmt(name, 3);
-		dat.bindStmt(email, 4);
+		dat.bindStringStmt(email, 4);
 		dat.bindStringStmt(state, 5);
 		dat.bindStringStmt(city, 6);
 		dat.bindStringStmt(street, 7);
-		dat.bindIntStmt(substatus, 8);
-		dat.bindDateStmt(subexpdate, 9);
 		
 		int result = dat.executeUpdateSQL();
+		dat.clearStatement();
 		return result;
 		
 		
 	}
 	
 	public void displayAccountinfo(int userID) throws SQLException {
-		sql = "SELECT ai_substatus as sub FROM accountinfo WHERE ai_userid = ?";
+		/*sql = "SELECT ai_substatus AS sub FROM accountinfo WHERE ai_userid = ?";
 		dat.prepStmt(sql);
 		dat.bindIntStmt(userID, 1);
 		ResultSet rs = dat.executeSQL();
@@ -210,11 +209,11 @@ public class database {
 		rs.close();
 		
 		if(substat == 1)
-		{
-			sql = "SELECT ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus, ai_subexpdate WHERE ai_userid = ?";
+		{*/
+			sql = "SELECT ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus, ai_subexpdate FROM accountinfo WHERE ai_userid = ?";
 			dat.prepStmt(sql);
 			dat.bindIntStmt(userID, 1);
-			rs = dat.executeSQL();
+			ResultSet rs = dat.executeSQL();
 			
 			if(rs.next())
 			{
@@ -231,8 +230,6 @@ public class database {
 				System.out.println("State: " + state);
 				System.out.println("City: " + city);
 				System.out.println("Street: " + street);
-				System.out.println("Substatus: " + substatus);
-				System.out.println("SubExpDate: " + subExpDate);
 				
 				rs.close();
 				dat.clearStatement();
@@ -240,36 +237,7 @@ public class database {
 			}
 			else
 				System.out.println("No Account inforation to provide.");
-		}
-		else if (substat == 0){
-			sql = "SELECT ai_customername, ai_email, ai_state, ai_city, ai_street, ai_substatus WHERE ai_userid = ?";
-			dat.prepStmt(sql);
-			dat.bindIntStmt(userID, 1);
-			rs = dat.executeSQL();
-			
-			if(rs.next())
-			{
-				String name = rs.getString("ai_customername");
-				String email = rs.getString("ai_email");
-				String state = rs.getString("ai_state");
-				String city = rs.getString("ai_city");
-				String street = rs.getString("ai_street");
-				int substatus = rs.getInt("ai_substatus");
-				
-				System.out.println("Name: " + name);
-				System.out.println("Email: "+ email);
-				System.out.println("State: " + state);
-				System.out.println("City: " + city);
-				System.out.println("Street: " + street);
-				System.out.println("Substatus: " + substatus);
-				
-				dat.clearStatement();
-				rs.close();
-				
-			}
-			else
-				System.out.println("No Account information to provide.");
-		}
+		
 		
 	}
 

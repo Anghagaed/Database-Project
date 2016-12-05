@@ -391,7 +391,7 @@ public class commandLine {
 		do{
 			System.out.println("*******************************************");
 			System.out.println("* Please choose an option:                *");
-			System.out.println("* 1. Add Account Info                     *");
+			System.out.println("* 1. Add/Update Account Info              *");
 			System.out.println("* 2. View Account Info                    *");
 			System.out.println("* 3. Edit Account Info                    *");
 			System.out.println("* 4. Delete Account                       *");
@@ -421,8 +421,9 @@ public class commandLine {
 		} while (input > 0 && input != 4);
 	}
 	
-	public static void insertAccount(int userID){
+	public static void insertAccount(int userID) throws SQLException{
 		String in;
+		sc.nextLine();
 		System.out.println("Enter Name: ");
 		String name = sc.nextLine();
 		
@@ -438,9 +439,10 @@ public class commandLine {
 		System.out.println("Enter Street: ");;
 		String street = sc.nextLine();
 		
-		System.out.println("Enter );
 		
-		dat.insertAccount(userID);
+		dat.insertAccount(userID, name, email, state, city, street);
+		
+		System.out.println("Account has been added.");
 	}
 	
 	public static void displayAccount(int userID) throws SQLException{
