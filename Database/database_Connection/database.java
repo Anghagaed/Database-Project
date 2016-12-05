@@ -21,15 +21,27 @@ public class database {
 		dat.createConnection();
 		sql = null;
 	}
+	public int getDomainExist(String domainname, int userID) throws SQLException {
+		sql = "SELECT count(*) AS ct FROM passwordentry WHERE p_domainname=? AND p_userID=?;";
+		dat.prepStmt(sql);
+		dat.bindStringStmt(domainname, 1);
+		dat.bindIntStmt(userID, 2);
+		ResultSet rs = dat.executeSQL();
+		int result = rs.getInt("ct");
+		rs.close();
+		return result;
+	}
 	public boolean getUserEncryptionStatus(String domainname, int userID) throws SQLException {
 		sql = "SELECT p_encryptstatus FROM passwordentry WHERE p_domainname=? AND p_userID=?;";
 		dat.prepStmt(sql);
 		dat.bindStringStmt(domainname, 1);
 		dat.bindIntStmt(userID, 2);
 		ResultSet rs = dat.executeSQL();
+		boolean output = false;rs.getBoolean("p_encryptstatus");
 		if (rs.next())
-			return rs.getBoolean("p_encryptstatus");
-		return false;
+			output = rs.getBoolean("p_encryptstatus");
+		rs.close();
+		return output;
 	}
 	public int getUserID(String username) throws SQLException {
 		sql = "SELECT u_userid FROM user WHERE u_username=?;";
@@ -240,14 +252,21 @@ public class database {
 		
 		
 	}
-	public int getAccID(int userID){
+	public int getAccID(int userID) throws SQLException{
+		sql = "SELECT ai_id as ID FROM accountinfo WHERE ai_userid = ?";
+		dat.prepStmt(sql);
+		dat.bindIntStmt(userID, 1);
+		ResultSet rs = dat.executeSQL();
 		
+		int id = (rs.getInt("ID"));
+		if(id ==0) { System.out.println("No Account information to edit.");}
+		rs.close();
+		return id;
 	}
 	
-	public int updateAccountInfo(int accID, int userID, String name, String )
 
 	// Need to be worked on.
-	public int insertAccInfo(int userID, String cName, String email, String state, String city, String street, int subStatus) throws SQLException {
+	/*public int insertAccInfo(int userID, String cName, String email, String state, String city, String street, int subStatus) throws SQLException {
 		sql = "SELECT count(*) as count FROM accountinfo;";
 		dat.prepStmt(sql);
 		ResultSet rs = dat.executeSQL();
@@ -269,7 +288,7 @@ public class database {
 		dat.clearStatement();
 		
 		return result;
-	}
+	}*/
 	
 	public int updateAccountStreet(String newStreet, int ID, int userID) {
 		sql = "UPDATE accountinfo SET ai_street= ? WHERE ai_id=? AND ai_userid=?;";
@@ -323,6 +342,36 @@ public class database {
 		int result = dat.executeUpdateSQL();
 		dat.clearStatement();
 		return result;
+	}
+	public int updatePWEPass(String newPass, String domain, int userID) throws SQLException {
+		sql = "SELECT p_id FROM passwordentry WHERE p_domainname=? AND p_userID=?;";
+		dat.prepStmt(sql);
+		dat.bindStringStmt(domain, 1);
+		dat.bindIntStmt(userID, 2);
+		ResultSet rs = dat.executeSQL();
+		int id = rs.getInt("p_id");
+		rs.close();
+		dat.clearStatement();
+		sql = "UPDATE passwordentry SET p_domainpassword=? WHERE p_id=? AND p_userid=?;";
+		dat.prepStmt(sql);
+		//dat.bindStringStmt(newPass)
+		return 0;
+	}
+	public int updatePWEDName(String newDomain, String domain, int userID) throws SQLException {
+		sql = "SELECT p_id FROM passwordentry WHERE p_domainname=? AND p_userID=?;";
+		dat.prepStmt(sql);
+		dat.bindStringStmt(domain, 1);
+		dat.bindIntStmt(userID, 2);
+		ResultSet rs = dat.executeSQL();
+		int id = rs.getInt("p_id");
+		rs.close();
+		dat.clearStatement();
+		sql = "UPDATE passwordentry SET p_domainname=? WHERE p_id=? AND p_userid=?;";
+		return 1;
+	}
+	public int updatePWEUName(String newName, String domain, int userID) {
+		sql = "UPDATE passwordentry SET p_domainusername=? WHERE p_id=? AND p_userid=?;";
+		return 1;
 	}
 	
 	public int insertUser(String username) throws SQLException {
@@ -506,6 +555,8 @@ public class database {
 			System.out.println("Billing Address: " + billAddress);
 			System.out.println("Card Number: " + cardNum);
 			System.out.println("Security Code: " + secCode);
+			
+			rs.close();
 		}
 		else if (encryptstat == 0) {
 			sql = "SELECT w_bankname, w_cardtype, w_nameoncard, w_expirationdate, w_billingaddress, w_cardnum, w_securitycode FROM wallet WHERE w_id =? AND w_userid = ?";
@@ -514,6 +565,7 @@ public class database {
 			dat.bindIntStmt(userID, 2);
 			rs = dat.executeSQL();
 			dat.clearStatement();
+			
 			String bank = rs.getString("w_bankname");
 			String cardType = rs.getString("w_cardtype");
 			String nameOnCard = rs.getString("w_nameoncard");
@@ -529,8 +581,10 @@ public class database {
 			System.out.println("Billing Address: " + billAddress);
 			System.out.println("Card Number: " + cardNum);
 			System.out.println("Security Code: " + secCode);
+			
+			rs.close();
 		}
-	else if(encryptstat == -1) { System.out.println("wallet DNE");}
+	
 		
 	}
 	
